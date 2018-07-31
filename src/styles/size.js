@@ -23,6 +23,7 @@ const icon = {
 const space = {
   default: '3.4rem',
   narrow: '1.6rem',
+  between_components: '0.6rem',
   title_content: '6rem',
   name_content: '1.2rem',
   between_contents: '2.4rem',
