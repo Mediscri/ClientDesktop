@@ -6,18 +6,18 @@ const icon = {
   },
   close: '2.8rem',
   search: '1.6rem',
-  dropdown: '1rem',
-  notice: {
-    off: '1.8rem',
-    on: '1.9rem',
-    click: '3rem',
-  },
+  notice: '1.8rem',
   patient_status: '1.2rem',
   accuracy: '3rem',
   loading: '1.6rem',
   // height
   repeat: '1.6rem',
   default: '2rem',
+  // both
+  dropdown: {
+    width: '1.2rem',
+    height: '1.5rem',
+  },
 };
 
 const space = {
@@ -29,6 +29,7 @@ const space = {
   between_contents: '2.4rem',
   icon_text: '2rem',
   between_categroies: '2.8rem',
+  between_texts: '1.2rem',
 };
 
 const container = {
@@ -78,6 +79,12 @@ const element = {
     height: '3.5rem',
     border: '0.2rem',
     radius: '0.8rem',
+  },
+  search_input: {
+    width: '20rem',
+    height: '2.4rem',
+    border: '0.2rem',
+    radius: '0.4rem',
   },
 };
 
