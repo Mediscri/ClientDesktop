@@ -2,6 +2,8 @@
 import React, { Component, Fragment } from 'react';
 import styled from './Styled';
 import Flex from '../../components/Flex';
+// type
+import type Moment from 'moment';
 // svg
 import dropdown from '../../icons/ic_dropdown.svg';
 
@@ -13,7 +15,7 @@ type Info = {
 
 type Props = {
   data: {
-    date: string,
+    date: Moment,
     history: $ReadOnlyArray<Info>,
   },
 };
@@ -32,7 +34,7 @@ const ClassifyStatus = (accuracy: number) => {
   }
 };
 
-const Patient = ({ info }: Info) => {
+const Patient = ({ info }: { info: Info }) => {
   return (
     <styled.InfoWrapper>
       <Flex option="align-items: center;">

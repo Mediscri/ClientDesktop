@@ -10,7 +10,14 @@ import notice_gray from '../../icons/ic_notice_gray.svg';
 import notice_green from '../../icons/ic_notice_green.svg';
 import notice_badge from '../../icons/ic_notice_badge.svg';
 
-export default class Navbar extends Component<{}> {
+type State = {
+  notice: {
+    isHover: boolean,
+    exist: boolean,
+  },
+};
+
+export default class Navbar extends Component<{}, State> {
   state = { notice: { isHover: false, exist: false } };
 
   handleNoticeHover = () =>
