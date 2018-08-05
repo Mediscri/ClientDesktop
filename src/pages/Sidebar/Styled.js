@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { size, color } from '../../styles';
 
 const Container = styled.div`
-  flex-basis: ${size.container.dashboard};
+  flex-basis: ${size.container.sidebar};
   margin-right: ${size.space.between_components};
   background-color: ${color.white};
   padding: ${size.space.between_contents} ${size.space.default};

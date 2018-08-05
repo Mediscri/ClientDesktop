@@ -78,7 +78,7 @@ const list = [
   },
 ];
 
-export default class Dashboard extends Component<{}> {
+export default class Sidebar extends Component<{}> {
   render() {
     return (
       <styled.Container>

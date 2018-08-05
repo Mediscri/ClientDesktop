@@ -35,7 +35,7 @@ const space = {
 
 const container = {
   // width
-  dashboard: '26.8rem',
+  sidebar: '26.8rem',
   modal_dropdown: '20rem',
   // height
   navbar: '8rem',
