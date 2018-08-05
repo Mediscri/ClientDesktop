@@ -7,8 +7,28 @@ html {
 body {
   margin: 0;
   padding: 0;
+  background-color: #edeeec;
 }
 
 :lang(ko) {
   font-family: 'Noto Sans KR', sans-serif;
+}
+
+input {
+  border: none;
+  padding: 0;
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  margin: 0;
+}
+
+a:hover {
+  cursor: pointer;
 }
