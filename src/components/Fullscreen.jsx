@@ -10,6 +10,7 @@ type Props = {
 const option = `
   position: relative;
   height: 100vh;
+  overflow: hidden;
 `;
 
 export default (props: Props) => (

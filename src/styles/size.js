@@ -23,6 +23,7 @@ const icon = {
 const space = {
   default: '3.4rem',
   narrow: '1.6rem',
+  wrapper: '1.8rem',
   between_components: '0.6rem',
   title_content: '6rem',
   name_content: '1.2rem',
@@ -61,6 +62,9 @@ const wrapper = {
     width: '37.5rem',
     height: '42rem',
   },
+  status: {
+    width: '3rem',
+  },
 };
 
 const element = {
@@ -88,4 +92,10 @@ const element = {
   },
 };
 
-export default { icon, space, wrapper, container, element };
+const font = {
+  14: '1.4rem',
+  16: '1.6rem',
+  18: '1.8rem',
+};
+
+export default { icon, space, wrapper, container, element, font };

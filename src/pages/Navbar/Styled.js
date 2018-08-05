@@ -53,14 +53,14 @@ const SerachInput = styled.input`
 // UserInfo
 const HospitalInfo = styled.p`
   color: ${color.dark_gray};
-  font-size: 1.6rem;
+  font-size: ${size.font['16']};
   font-weight: normal;
   margin-right: ${size.space.between_texts};
 `;
 
 const UserInfo = styled.p`
   color: ${color.dark_gray};
-  font-size: 1.6rem;
+  font-size: ${size.font['16']};
   font-weight: lighter;
   margin-right: ${size.space.between_texts};
 `;
