@@ -3,6 +3,7 @@ import { size, color } from '../../styles';
 
 const Container = styled.div`
   flex-basis: ${size.container.sidebar};
+  box-sizing: border-box;
   margin-right: ${size.space.between_components};
   background-color: ${color.white};
   padding: ${size.space.between_contents} ${size.space.default};

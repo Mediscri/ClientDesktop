@@ -5,6 +5,7 @@ import styled from './Styled';
 // component
 import History from './History';
 
+// TODO: [REMOVE]Test data
 const list = [
   {
     date: moment(),

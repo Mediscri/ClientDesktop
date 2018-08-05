@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 // pages
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+import Dashboard from './Dashboard';
 // components
 import Fullscreen from '../components/Fullscreen';
 import Flex from '../components/Flex';
@@ -16,7 +17,7 @@ export default class App extends Component<{}> {
           <Navbar />
           <Flex>
             <Sidebar />
-            <div />
+            <Dashboard />
           </Flex>
         </Fullscreen>
       </Router>

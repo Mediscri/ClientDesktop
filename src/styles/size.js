@@ -65,6 +65,9 @@ const wrapper = {
   status: {
     width: '3rem',
   },
+  info: {
+    width: '17rem',
+  },
 };
 
 const element = {
@@ -96,6 +99,7 @@ const font = {
   14: '1.4rem',
   16: '1.6rem',
   18: '1.8rem',
+  20: '2rem',
 };
 
 export default { icon, space, wrapper, container, element, font };
