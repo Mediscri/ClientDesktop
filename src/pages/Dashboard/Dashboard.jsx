@@ -2,92 +2,126 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import styled from './Styled';
+import InfoBar from './InfoBar';
+import Category from './Category';
 // component
-import History from './History';
+import Flex from '../../components/Flex';
 
-const list = [
-  {
-    date: moment(),
-    history: [
-      {
-        name: '원지운',
-        accuracy: 89.6,
-        pi: '섬근육통',
-      },
-      {
-        name: '김동민',
-        accuracy: 69.3,
-        pi: '퇴행성 관절염',
-      },
-      {
-        name: '레자바지',
-        accuracy: 74.5,
-        pi: '섬근육통',
-      },
-    ],
-  },
-  {
-    date: moment().subtract(1, 'days'),
-    history: [
-      {
-        name: '손흥민',
-        accuracy: 84.7,
-        pi: '섬근육통',
-      },
-      {
-        name: '장현수',
-        accuracy: 72.5,
-        pi: '퇴행성 관절염',
-      },
-    ],
-  },
-  {
-    date: moment().subtract(2, 'days'),
-    history: [
-      {
-        name: '정준일',
-        accuracy: 68.5,
-        pi: '섬근육통',
-      },
-      {
-        name: '로이킴',
-        accuracy: 84.3,
-        pi: '퇴행성 관절염',
-      },
-      {
-        name: '윤하',
-        accuracy: 85.9,
-        pi: '섬근육통',
-      },
-    ],
-  },
-  {
-    date: moment().subtract(3, 'days'),
-    history: [
-      {
-        name: '손흥민',
-        accuracy: 84.7,
-        pi: '섬근육통',
-      },
-      {
-        name: '장현수',
-        accuracy: 72.5,
-        pi: '퇴행성 관절염',
-      },
-    ],
-  },
-];
+// TODO: [REMOVE]Test data
+const data = {
+  name: '원지운',
+  sex: 'M',
+  age: '27',
+  created_at: moment(),
+  categories: [
+    {
+      title: 'Chief Complain',
+      log: [
+        {
+          accuracy: 88.92,
+          text: 'Rt. Hip Pain, onset 2017.09',
+        },
+      ],
+    },
+    {
+      title: 'Present Illness',
+      log: [
+        {
+          accuracy: 86.36,
+          text: 'Cane Ambulation(+), onset 2017.10',
+        },
+      ],
+    },
+    {
+      title: 'Past Medical history',
+      log: [
+        {
+          accuracy: 82.73,
+          text: 'Cane Ambulation(+), onset 2017.10',
+        },
+        {
+          accuracy: 56.24,
+          text: 'Op Hx : none',
+        },
+      ],
+    },
+    {
+      title: 'Personal History',
+      log: [
+        {
+          accuracy: 94.93,
+          text: 'Alcohol (+) : 20년 이상, 소주 1병 / d',
+        },
+        {
+          accuracy: 96.21,
+          text: '금주, onset 2017.06',
+        },
+      ],
+    },
+    {
+      title: 'Review of System',
+      log: [
+        {
+          accuracy: 94.93,
+          text: 'Musculoskeletal',
+        },
+        {
+          accuracy: 96.21,
+          text: 'Rt. Hip Pain (+)',
+        },
+        {
+          accuracy: 96.21,
+          text: 'Lt. Hip Pain (-)',
+        },
+        {
+          accuracy: 76.23,
+          text: 'LBP (+)',
+        },
+      ],
+    },
+    {
+      title: 'Physical Examination',
+      log: [
+        {
+          accuracy: 89.23,
+          text: 'ROM',
+        },
+        {
+          accuracy: 96.21,
+          text: 'Limping gait (+)',
+        },
+        {
+          accuracy: 94.98,
+          text: 'LLD (-)',
+        },
+        {
+          accuracy: 83.53,
+          text: 'Patric test (+ / -)',
+        },
+        {
+          accuracy: 75.38,
+          text: 'Impingement (+ / -)',
+        },
+        {
+          accuracy: 96.21,
+          text: 'Hello',
+        },
+      ],
+    },
+  ],
+};
 
 export default class Dashboard extends Component<{}> {
   render() {
     return (
-      <styled.Container>
-        <styled.CreateBoard>신규 진료</styled.CreateBoard>
-        <styled.HistoryContainer>
-          <styled.Hr />
-          {list.map(data => <History data={data} key={data.date} />)}
-        </styled.HistoryContainer>
-      </styled.Container>
+      <Flex dir="column">
+        <InfoBar data={data} />
+        <styled.Container>
+          {data.categories.map(item => (
+            <Category item={item} key={item.title} />
+          ))}
+        </styled.Container>
+      </Flex>
     );
   }
 }

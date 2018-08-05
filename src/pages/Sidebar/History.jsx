@@ -2,6 +2,7 @@
 import React, { Component, Fragment } from 'react';
 import styled from './Styled';
 import Flex from '../../components/Flex';
+import { mixin } from '../../styles';
 // type
 import type Moment from 'moment';
 // svg
@@ -24,28 +25,18 @@ type State = {
   showMore: boolean,
 };
 
-const ClassifyStatus = (accuracy: number) => {
-  if (accuracy < 70) {
-    return '#D14040';
-  } else if (accuracy < 80) {
-    return '#F9C433';
-  } else {
-    return '#429D51';
-  }
-};
-
 const Patient = ({ info }: { info: Info }) => {
   return (
     <styled.InfoWrapper>
       <Flex option="align-items: center;">
-        <styled.StatusWrapper>
-          <styled.InfoStatus status={ClassifyStatus(info.accuracy)} />
-        </styled.StatusWrapper>
+        <styled.AccuracyWrapper>
+          <styled.InfoAccuracy color={mixin.accuracyToColor(info.accuracy)} />
+        </styled.AccuracyWrapper>
         <styled.InfoName>{info.name}</styled.InfoName>
       </Flex>
       <Flex option="margin-top: 0.6rem;">
         {/* dummy area */}
-        <styled.StatusWrapper />
+        <styled.AccuracyWrapper />
         <styled.InfoPI>PI: {info.pi}</styled.InfoPI>
       </Flex>
     </styled.InfoWrapper>

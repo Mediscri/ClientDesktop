@@ -1,118 +1,148 @@
 import styled from 'styled-components';
-import { size, color } from '../../styles';
+import { size, color, mixin } from '../../styles';
 
 const Container = styled.div`
-  flex-basis: ${size.container.dashboard};
-  margin-right: ${size.space.between_components};
-  background-color: ${color.white};
-  padding: ${size.space.between_contents} ${size.space.default};
-  display: flex;
-  flex-direction: column;
-`;
-
-const CreateBoard = styled.a`
-  width: 100%;
-  height: ${size.element.button_with_text.height};
-  border-radius: ${size.element.button_with_text.radius};
-  background-color: ${color.green};
+  flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
-  /* font */
-  color: ${color.white};
-  font-size: ${size.font['16']};
-  font-weight: normal;
-`;
-
-// history
-const HistoryContainer = styled.div`
-  flex: 1;
-  margin-top: ${size.space.between_contents};
+  flex-flow: wrap;
+  margin: 0 0 ${size.space.between_categroies} -${size.space.between_categroies};
   overflow-y: scroll;
 `;
 
-const HistoryWrapper = styled.div`
-  width: 100%;
-  padding: ${size.space.wrapper} 0;
+// info
+const InfoContainer = styled.div`
+  height: ${size.container.navbar};
+  box-sizing: border-box;
+  padding: ${size.space.narrow} ${size.space.default};
+  background-color: ${color.white};
+  display: flex;
 `;
 
-const Header = styled.div`
+const InfoWrapper = styled.div`
+  flex-basis: ${size.wrapper.info.width};
   display: flex;
-  &:hover {
-    cursor: pointer;
+  flex-direction: column;
+  margin-left: ${size.space.default};
+  &:first-of-type {
+    margin-left: 0;
   }
 `;
 
-const HistoryDate = styled.p`
-  color: ${color.black};
-  font-size: ${size.font['16']};
+const InfoTitle = styled.p`
+  color: ${color.light_gray};
+  font-size: ${size.font['14']};
   font-weight: normal;
 `;
 
-const DropdownWrapper = styled.div`
+const InfoContent = styled.p`
+  color: ${color.black};
+  font-size: ${size.font['20']};
+`;
+
+const Vr = styled.div`
+  height: 100%;
+  border: ${color.lighter_gray} 1px solid;
+`;
+
+const ButtonWrapper = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 `;
 
-const Dropdown = styled.img`
-  width: ${size.icon.dropdown.width};
-  height: ${size.icon.dropdown.height};
-  transform: rotate(${props => (props.showMore ? 180 : 0)}deg);
-  transition: transform 0.4s ease-out;
-`;
-
-const Hr = styled.div`
-  width: 100%;
-  border: ${color.lighter_gray} 1px solid;
-`;
-
-const InfoWrapper = styled.div`
-  margin-top: ${size.space.wrapper};
-`;
-
-const StatusWrapper = styled.div`
-  flex-basis: ${size.wrapper.status.width};
+const Button = styled.div`
+  width: ${size.element.button_with_text.width};
+  height: ${size.element.button_with_text.height};
+  border-radius: ${size.element.button_with_text.radius};
   display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font */
+  font-size: ${size.font['16']};
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
-const InfoStatus = styled.div`
-  width: ${size.icon.patient_status};
-  height: ${size.icon.patient_status};
-  background-color: ${props => props.status};
-  border-radius: 0.6rem;
+const ButtonReady = Button.extend`
+  background-color: ${color.green};
+  /* font */
+  color: ${color.white};
 `;
 
-const InfoName = styled.p`
-  flex: 1;
+const ButtonProgress = Button.extend`
+  background-color: ${color.white};
+  border: ${color.green} ${size.element.button_with_text.border} solid;
+  /* font */
+  color: ${color.green};
+`;
+
+// category
+const CategoryWrapper = styled.div`
+  width: ${size.wrapper.category.width};
+  min-height: ${size.wrapper.category.height};
+  box-sizing: border-box;
+  padding: 2.4rem 2rem;
+  background-color: ${color.white};
+  margin: ${size.space.between_categroies} 0 0 ${size.space.between_categroies};
+`;
+
+const CategoryTitle = styled.h3`
   color: ${color.black};
   font-size: ${size.font['16']};
-  font-weight: lighter;
+  font-weight: normal;
 `;
 
-const InfoPI = styled.p`
-  flex: 1;
-  color: ${color.medium_gray};
+const HrLarge = styled.div`
+  width: 100%;
+  border: ${color.lighter_gray} 1px solid;
+  margin: ${size.space['20']} 0 ${size.space.narrow};
+`;
+
+const LogAccuracy = styled.div`
+  width: ${size.element.accuracy.size};
+  height: ${size.element.accuracy.size};
+  border-radius: ${size.element.accuracy.radius};
+  margin-right: 1rem;
+  background-color: ${props => props.color};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font */
+  color: ${color.white};
+  font-size: ${size.font['10']};
+`;
+
+const LogText = styled.p`
+  color: ${props => (props.color ? props.color : color.black)};
   font-size: ${size.font['14']};
-  font-weight: lighter;
+  margin: ${size.space['14']} 0;
+`;
+
+const HrSmall = styled.div`
+  margin-left: ${mixin.calcSize(`${size.element.accuracy.size} + 1rem`)};
+  border: ${color.lighter_gray} 1px solid;
+  &:last-of-type {
+    border: none;
+  }
 `;
 
 export default {
   Container,
-  CreateBoard,
-  // history
-  HistoryContainer,
-  HistoryWrapper,
-  Header,
-  Dropdown,
-  HistoryDate,
-  DropdownWrapper,
-  Hr,
-  // info
+  InfoContainer,
   InfoWrapper,
-  StatusWrapper,
-  InfoStatus,
-  InfoName,
-  InfoPI,
+  InfoTitle,
+  InfoContent,
+  Vr,
+  ButtonWrapper,
+  ButtonReady,
+  ButtonProgress,
+  CategoryWrapper,
+  CategoryTitle,
+  HrLarge,
+  LogAccuracy,
+  LogText,
+  HrSmall,
 };

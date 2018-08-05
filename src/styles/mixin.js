@@ -1,9 +1,9 @@
+import color from './color';
+
 const extractNum = text => parseInt(text.replace(/(\d+)rem$/, '$1'), 10);
 
 const calcSize = formula => {
   const list = formula.split(' ');
-  console.log(list);
-
   if (list.length < 2) {
     return formula;
   }
@@ -21,8 +21,17 @@ const calcSize = formula => {
         break;
     }
   }
-
   return `${result}rem`;
 };
 
-export default { calcSize };
+const accuracyToColor = (accuracy: number) => {
+  if (accuracy < 70) {
+    return color.red;
+  } else if (accuracy < 80) {
+    return color.yellow;
+  } else {
+    return color.green;
+  }
+};
+
+export default { calcSize, accuracyToColor };
