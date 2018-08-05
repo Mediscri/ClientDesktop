@@ -8,11 +8,13 @@ function setBaseURL(mode: string) {
       return 'ws://https://api.mediscri.com/';
     case DEVELOPMENT:
     default:
-      return 'ws://localhost:8000/chat/test/';
+      return 'ws://localhost:8000/ws/chat/test/';
   }
 }
 
 class Socket {
+  socket: WebSocket;
+
   static instance = null;
   callbacks = {};
 
@@ -24,6 +26,7 @@ class Socket {
   }
 
   constructor() {
+    //$FlowFixMe
     this.socket = null;
   }
 
@@ -35,17 +38,18 @@ class Socket {
       console.log(`WebSocket open - ${path}`);
     };
     this.socket.onmessage = e => {
+      // TODO: dispatch to store
       console.log(e.data);
     };
     this.socket.onerror = e => {
-      console.log(e.message);
+      console.log(e);
     };
     this.socket.onclose = () => {
-      console.log(`WebSocket closed, try to reconnect.`);
-      // this.connect(endpoint);
+      console.log(`WebSocket closed. Try to reconnect...`);
+      this.connect();
     };
   }
 }
 
-const SocketInstance = Socket.getInstance();
+const SocketInstance: Socket = Socket.getInstance();
 export default SocketInstance;
