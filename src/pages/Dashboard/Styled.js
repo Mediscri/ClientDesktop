@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { size, color } from '../../styles';
+import { size, color, mixin } from '../../styles';
 
 const Container = styled.div`
   flex: 1;
@@ -40,7 +40,7 @@ const InfoContent = styled.p`
   font-size: ${size.font['20']};
 `;
 
-const Hr = styled.div`
+const Vr = styled.div`
   height: 100%;
   border: ${color.lighter_gray} 1px solid;
 `;
@@ -89,15 +89,60 @@ const CategoryWrapper = styled.div`
   margin: ${size.space.between_categroies} 0 0 ${size.space.between_categroies};
 `;
 
+const CategoryTitle = styled.h3`
+  color: ${color.black};
+  font-size: ${size.font['16']};
+  font-weight: normal;
+`;
+
+const HrLarge = styled.div`
+  width: 100%;
+  border: ${color.lighter_gray} 1px solid;
+  margin: ${size.space['20']} 0 ${size.space.narrow};
+`;
+
+const LogAccuracy = styled.div`
+  width: ${size.element.accuracy.size};
+  height: ${size.element.accuracy.size};
+  border-radius: ${size.element.accuracy.radius};
+  margin-right: 1rem;
+  background-color: ${props => props.color};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font */
+  color: ${color.white};
+  font-size: ${size.font['10']};
+`;
+
+const LogText = styled.p`
+  color: ${props => (props.color ? props.color : color.black)};
+  font-size: ${size.font['14']};
+  margin: ${size.space['14']} 0;
+`;
+
+const HrSmall = styled.div`
+  margin-left: ${mixin.calcSize(`${size.element.accuracy.size} + 1rem`)};
+  border: ${color.lighter_gray} 1px solid;
+  &:last-of-type {
+    border: none;
+  }
+`;
+
 export default {
   Container,
   InfoContainer,
   InfoWrapper,
   InfoTitle,
   InfoContent,
-  Hr,
+  Vr,
   ButtonWrapper,
   ButtonReady,
   ButtonProgress,
   CategoryWrapper,
+  CategoryTitle,
+  HrLarge,
+  LogAccuracy,
+  LogText,
+  HrSmall,
 };

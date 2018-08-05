@@ -31,6 +31,9 @@ const space = {
   icon_text: '2rem',
   between_categroies: '2.8rem',
   between_texts: '1.2rem',
+  // number
+  14: '1.4rem',
+  20: '2rem',
 };
 
 const container = {
@@ -93,9 +96,14 @@ const element = {
     border: '0.2rem',
     radius: '0.4rem',
   },
+  accuracy: {
+    size: '3rem',
+    radius: '1.5rem',
+  },
 };
 
 const font = {
+  10: '1rem',
   14: '1.4rem',
   16: '1.6rem',
   18: '1.8rem',

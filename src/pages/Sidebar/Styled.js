@@ -73,15 +73,15 @@ const InfoWrapper = styled.div`
   margin-top: ${size.space.wrapper};
 `;
 
-const StatusWrapper = styled.div`
+const AccuracyWrapper = styled.div`
   flex-basis: ${size.wrapper.status.width};
   display: flex;
 `;
 
-const InfoStatus = styled.div`
+const InfoAccuracy = styled.div`
   width: ${size.icon.patient_status};
   height: ${size.icon.patient_status};
-  background-color: ${props => props.status};
+  background-color: ${props => props.color};
   border-radius: 0.6rem;
 `;
 
@@ -112,8 +112,8 @@ export default {
   Hr,
   // info
   InfoWrapper,
-  StatusWrapper,
-  InfoStatus,
+  AccuracyWrapper,
+  InfoAccuracy,
   InfoName,
   InfoPI,
 };

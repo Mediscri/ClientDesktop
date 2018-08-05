@@ -67,7 +67,7 @@ export default class InfoBar extends Component<Props, State> {
                 </styled.InfoContent>
               </Flex>
             </styled.InfoWrapper>
-            {key !== 'created_at' && <styled.Hr />}
+            {key !== 'created_at' && <styled.Vr />}
           </Fragment>
         ))}
         <styled.ButtonWrapper>
