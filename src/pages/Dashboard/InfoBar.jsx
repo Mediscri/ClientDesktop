@@ -2,6 +2,8 @@
 import React, { Component, Fragment } from 'react';
 import styled from './Styled';
 import Flex from '../../components/Flex';
+// network
+import Socket from '../../networks/WebSocket';
 // type
 import type Moment from 'moment';
 
@@ -30,24 +32,27 @@ type Props = {
 
 type State = {
   session: 'ready' | 'progress' | 'stop',
+  btnMessage: '진료시작' | '진료중..' | '종료하기',
 };
 
 export default class InfoBar extends Component<Props, State> {
   state = {
     session: 'ready',
+    btnMessage: '진료시작',
   };
 
   handleButtonClick = () => {
     switch (this.state.session) {
       case 'ready':
       case 'stop':
-        this.setState({ session: 'progress' });
+        Socket.connect();
+        this.setState({ session: 'progress', btnMessage: '진료중..' });
         break;
       case 'progress':
-        this.setState({ session: 'stop' });
+        Socket.close();
+        this.setState({ session: 'stop', btnMessage: '진료시작' });
         break;
       default:
-        break;
     }
   };
 
@@ -72,12 +77,15 @@ export default class InfoBar extends Component<Props, State> {
         ))}
         <styled.ButtonWrapper>
           {this.state.session === 'progress' ? (
-            <styled.ButtonProgress onClick={this.handleButtonClick}>
-              진료중...
+            <styled.ButtonProgress
+              onMouseEnter={() => this.setState({ btnMessage: '종료하기' })}
+              onMouseLeave={() => this.setState({ btnMessage: '진료중..' })}
+              onClick={this.handleButtonClick}>
+              {this.state.btnMessage}
             </styled.ButtonProgress>
           ) : (
             <styled.ButtonReady onClick={this.handleButtonClick}>
-              진료 시작
+              {this.state.btnMessage}
             </styled.ButtonReady>
           )}
         </styled.ButtonWrapper>

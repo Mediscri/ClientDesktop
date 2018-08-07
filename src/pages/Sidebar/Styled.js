@@ -29,7 +29,12 @@ const CreateBoard = styled.a`
 const HistoryContainer = styled.div`
   flex: 1;
   margin-top: ${size.space.between_contents};
+  overflow-x: hidden;
   overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
 `;
 
 const HistoryWrapper = styled.div`

@@ -1,4 +1,3 @@
-// @flow
 const DEVELOPMENT = 'DEVELOPMENT';
 const PRODUCTION = 'PRODUCTION';
 
@@ -34,8 +33,8 @@ class Socket {
     const path = setBaseURL(DEVELOPMENT);
     this.socket = new WebSocket(path);
 
-    this.socket.onopen = () => {
-      console.log(`WebSocket open - ${path}`);
+    this.socket.onopen = e => {
+      console.log('socket open');
     };
     this.socket.onmessage = e => {
       // TODO: dispatch to store
@@ -45,9 +44,15 @@ class Socket {
       console.log(e);
     };
     this.socket.onclose = () => {
-      console.log(`WebSocket closed. Try to reconnect...`);
+      console.log(`socket unexpectly closed, try to reconnect...`);
       this.connect();
     };
+  }
+
+  close() {
+    // @override socket.onclose()
+    this.socket.onclose = () => console.log(`socket closed`);
+    this.socket.close();
   }
 }
 

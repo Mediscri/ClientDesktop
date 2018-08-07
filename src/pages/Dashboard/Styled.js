@@ -68,6 +68,7 @@ const Button = styled.div`
 
 const ButtonReady = Button.extend`
   background-color: ${color.green};
+  border: ${color.green} ${size.element.button_with_text.border} solid;
   /* font */
   color: ${color.white};
 `;
@@ -77,6 +78,11 @@ const ButtonProgress = Button.extend`
   border: ${color.green} ${size.element.button_with_text.border} solid;
   /* font */
   color: ${color.green};
+  &:hover {
+    background-color: ${color.green};
+    /* font */
+    color: ${color.white};
+  }
 `;
 
 // category
