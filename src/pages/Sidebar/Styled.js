@@ -118,31 +118,6 @@ export const ModalTitle = styled.h3`
   font-weight: normal;
 `;
 
-// export const ModalInputWrapper = styled.div`
-//   margin: ${size.space.title_content} 0;
-// `;
-
-// export const ModalInputText = styled.p`
-//   color: ${color.dark_gray};
-//   font-size: ${size.font['18']};
-//   font-weight: lighter;
-//   margin-bottom: ${size.space.name_content};
-// `;
-
-// export const ModalInput = styled.input`
-//   width: ${size.element.input.width};
-//   height: ${size.element.input.height};
-//   border: ${color.lighter_gray} ${size.element.input.border} solid;
-//   border-radius: ${size.element.input.radius};
-//   padding: 0 ${size.space.between_texts};
-//   box-sizing: border-box;
-//   font-size: ${size.font['16']};
-//   margin-bottom: ${size.space.between_contents};
-//   &:last-of-type {
-//     margin-bottom: 0;
-//   }
-// `;
-
 export const ModalButton = styled.button`
   width: ${size.element.input.width};
   height: ${size.element.input.height};

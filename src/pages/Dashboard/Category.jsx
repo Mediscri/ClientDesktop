@@ -1,8 +1,8 @@
 // @flow
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from './Styled';
-import Flex from '../../components/Flex';
-import { mixin } from '../../styles';
+// component
+import CategroyRow from './CategoryRow';
 
 type LogType = {
   accuracy: number,
@@ -23,20 +23,7 @@ export default class Category extends Component<Props> {
       <styled.CategoryWrapper>
         <styled.CategoryTitle>{title}</styled.CategoryTitle>
         <styled.HrLarge />
-        {log.map(info => {
-          const color = mixin.accuracyToColor(info.accuracy);
-          return (
-            <Fragment key={info.text}>
-              <Flex option="align-items: center;">
-                <styled.LogAccuracy color={color}>
-                  {`${parseInt(info.accuracy, 10)}%`}
-                </styled.LogAccuracy>
-                <styled.LogText color={color}>{info.text}</styled.LogText>
-              </Flex>
-              <styled.HrSmall />
-            </Fragment>
-          );
-        })}
+        {log.map(info => <CategroyRow info={info} key={info.text}/>)}
       </styled.CategoryWrapper>
     );
   }

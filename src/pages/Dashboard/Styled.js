@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ContextMenu } from 'react-contextmenu';
 import { size, color, mixin } from '../../styles';
 
 const Container = styled.div`
@@ -104,10 +105,15 @@ const CategoryTitle = styled.h3`
 const HrLarge = styled.div`
   width: 100%;
   border: ${color.lighter_gray} 1px solid;
-  margin: ${size.space['20']} 0 ${size.space.narrow};
+  margin: ${size.space['20']} 0 ${size.space['6']};
 `;
 
-const LogAccuracy = styled.div`
+const RowWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const RowAccuracy = styled.div`
   width: ${size.element.accuracy.size};
   height: ${size.element.accuracy.size};
   border-radius: ${size.element.accuracy.radius};
@@ -121,7 +127,7 @@ const LogAccuracy = styled.div`
   font-size: ${size.font['10']};
 `;
 
-const LogText = styled.p`
+const RowText = styled.p`
   color: ${props => (props.color ? props.color : color.black)};
   font-size: ${size.font['14']};
   margin: ${size.space['14']} 0;
@@ -129,10 +135,33 @@ const LogText = styled.p`
 
 const HrSmall = styled.div`
   margin-left: ${mixin.calcSize(`${size.element.accuracy.size} + 1rem`)};
-  border: ${color.lighter_gray} 1px solid;
+  border: ${color.lighter_gray} 0.5px solid;
   &:last-of-type {
     border: none;
   }
+`;
+
+// context
+const Menu = styled(ContextMenu)`
+  min-width: ${size.container.context};
+  padding: ${size.space['8']} ${size.space['12']};
+  background-color: ${color.white};
+  border: ${size.element.context.border} ${color.dark_gray} solid;
+  border-radius: ${size.element.context.radius};
+`;
+
+const Item = styled.div`
+  padding: ${size.space['6']};
+  margin: 0 -${size.space['6']};
+  &:hover {
+    cursor: default;
+    background-color: ${color.lighter_gray};
+  }
+`;
+
+const ItemMessage = styled.p`
+  color: ${color.black};
+  font-size: ${size.font['14']};
 `;
 
 export default {
@@ -148,7 +177,11 @@ export default {
   CategoryWrapper,
   CategoryTitle,
   HrLarge,
-  LogAccuracy,
-  LogText,
+  RowWrapper,
+  RowAccuracy,
+  RowText,
   HrSmall,
+  Menu,
+  Item,
+  ItemMessage,
 };
