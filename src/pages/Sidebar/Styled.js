@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { size, color } from '../../styles';
 
-const Container = styled.div`
+export const Container = styled.div`
   flex-basis: ${size.container.sidebar};
   box-sizing: border-box;
   margin-right: ${size.space.between_components};
@@ -11,7 +11,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const CreateBoard = styled.a`
+export const CreateChart = styled.div`
   width: 100%;
   height: ${size.element.button_with_text.height};
   border-radius: ${size.element.button_with_text.radius};
@@ -23,10 +23,13 @@ const CreateBoard = styled.a`
   color: ${color.white};
   font-size: ${size.font['16']};
   font-weight: normal;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 // history
-const HistoryContainer = styled.div`
+export const HistoryContainer = styled.div`
   flex: 1;
   margin-top: ${size.space.between_contents};
   overflow-x: hidden;
@@ -37,88 +40,119 @@ const HistoryContainer = styled.div`
   }
 `;
 
-const HistoryWrapper = styled.div`
+export const HistoryWrapper = styled.div`
   width: 100%;
   padding: ${size.space.wrapper} 0;
 `;
 
-const Header = styled.div`
+export const Header = styled.div`
   display: flex;
   &:hover {
     cursor: pointer;
   }
 `;
 
-const HistoryDate = styled.p`
+export const HistoryDate = styled.p`
   color: ${color.black};
   font-size: ${size.font['16']};
   font-weight: normal;
 `;
 
-const DropdownWrapper = styled.div`
+export const DropdownWrapper = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 `;
 
-const Dropdown = styled.img`
+export const Dropdown = styled.img`
   width: ${size.icon.dropdown.width};
   height: ${size.icon.dropdown.height};
   transform: rotate(${props => (props.showMore ? 180 : 0)}deg);
   transition: transform 0.4s ease-out;
 `;
 
-const Hr = styled.div`
+export const Hr = styled.div`
   width: 100%;
   border: ${color.lighter_gray} 1px solid;
 `;
 
-const InfoWrapper = styled.div`
+export const InfoWrapper = styled.div`
   margin-top: ${size.space.wrapper};
 `;
 
-const AccuracyWrapper = styled.div`
+export const AccuracyWrapper = styled.div`
   flex-basis: ${size.wrapper.status.width};
   display: flex;
 `;
 
-const InfoAccuracy = styled.div`
+export const InfoAccuracy = styled.div`
   width: ${size.icon.patient_status};
   height: ${size.icon.patient_status};
   background-color: ${props => props.color};
   border-radius: 0.6rem;
 `;
 
-const InfoName = styled.p`
+export const InfoName = styled.p`
   flex: 1;
   color: ${color.black};
   font-size: ${size.font['16']};
   font-weight: lighter;
 `;
 
-const InfoPI = styled.p`
+export const InfoCC = styled.p`
   flex: 1;
   color: ${color.medium_gray};
   font-size: ${size.font['14']};
   font-weight: lighter;
 `;
 
-export default {
-  Container,
-  CreateBoard,
-  // history
-  HistoryContainer,
-  HistoryWrapper,
-  Header,
-  Dropdown,
-  HistoryDate,
-  DropdownWrapper,
-  Hr,
-  // info
-  InfoWrapper,
-  AccuracyWrapper,
-  InfoAccuracy,
-  InfoName,
-  InfoPI,
-};
+// modal
+export const ModalWrapper = styled.div`
+  width: ${size.wrapper.input.width};
+`;
+
+export const ModalTitle = styled.h3`
+  color: ${color.green};
+  font-size: ${size.font['26']};
+  font-weight: normal;
+`;
+
+// export const ModalInputWrapper = styled.div`
+//   margin: ${size.space.title_content} 0;
+// `;
+
+// export const ModalInputText = styled.p`
+//   color: ${color.dark_gray};
+//   font-size: ${size.font['18']};
+//   font-weight: lighter;
+//   margin-bottom: ${size.space.name_content};
+// `;
+
+// export const ModalInput = styled.input`
+//   width: ${size.element.input.width};
+//   height: ${size.element.input.height};
+//   border: ${color.lighter_gray} ${size.element.input.border} solid;
+//   border-radius: ${size.element.input.radius};
+//   padding: 0 ${size.space.between_texts};
+//   box-sizing: border-box;
+//   font-size: ${size.font['16']};
+//   margin-bottom: ${size.space.between_contents};
+//   &:last-of-type {
+//     margin-bottom: 0;
+//   }
+// `;
+
+export const ModalButton = styled.button`
+  width: ${size.element.input.width};
+  height: ${size.element.input.height};
+  border: ${color.green} ${size.element.input.border} solid;
+  border-radius: ${size.element.input.radius};
+  background: ${color.green};
+  box-sizing: border-box;
+  font-size: ${size.font['16']};
+  color: ${color.white};
+  &:hover {
+    cursor: pointer;
+  }
+`;

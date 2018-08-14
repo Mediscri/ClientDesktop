@@ -58,7 +58,7 @@ const container = {
 };
 
 const wrapper = {
-  login: {
+  input: {
     width: '40.7rem',
   },
   category: {
@@ -78,8 +78,8 @@ const element = {
     width: '4px',
     height: '48.5rem',
   },
-  login_input: {
-    width: wrapper.login.width,
+  input: {
+    width: wrapper.input.width,
     height: '5.2rem',
     border: '0.3rem',
     radius: '0.8rem',
@@ -108,6 +108,7 @@ const font = {
   16: '1.6rem',
   18: '1.8rem',
   20: '2rem',
+  26: '2.6rem',
 };
 
 export default { icon, space, wrapper, container, element, font };
