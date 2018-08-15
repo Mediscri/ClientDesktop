@@ -1,15 +1,4 @@
-const DEVELOPMENT = 'DEVELOPMENT';
-const PRODUCTION = 'PRODUCTION';
-
-function setBaseURL(mode: string) {
-  switch (mode) {
-    case PRODUCTION:
-      return 'ws://https://api.mediscri.com/';
-    case DEVELOPMENT:
-    default:
-      return 'ws://localhost:8000/ws/chat/test/';
-  }
-}
+import { baseWS } from './baseURL';
 
 class Socket {
   socket: WebSocket;
@@ -29,9 +18,8 @@ class Socket {
     this.socket = null;
   }
 
-  connect() {
-    const path = setBaseURL(DEVELOPMENT);
-    this.socket = new WebSocket(path);
+  connect(path) {
+    this.socket = new WebSocket(baseWS + path);
 
     this.socket.onopen = e => {
       console.log('socket open');
@@ -45,12 +33,12 @@ class Socket {
     };
     this.socket.onclose = () => {
       console.log(`socket unexpectly closed, try to reconnect...`);
-      this.connect();
+      this.connect(path);
     };
   }
 
   close() {
-    // @override socket.onclose()
+    // @Override
     this.socket.onclose = () => console.log(`socket closed`);
     this.socket.close();
   }

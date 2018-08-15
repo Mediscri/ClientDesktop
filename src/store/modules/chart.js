@@ -8,7 +8,7 @@ type ChartNew = {|
     +id: number,
     +name: string,
     +age: number,
-    +gender: 'm' | 'f',
+    +sex: 'm' | 'f',
   },
   +doctor: {
     +id: number,

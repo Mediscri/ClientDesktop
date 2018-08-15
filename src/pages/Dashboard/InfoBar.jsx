@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import * as styled from './Styled';
 import Flex from '../../components/Flex';
 // network
-import Socket from '../../networks/WebSocket';
+import { Socket } from '../../networks';
 // type
 import type Moment from 'moment';
 
@@ -45,11 +45,13 @@ export default class InfoBar extends Component<Props, State> {
     switch (this.state.session) {
       case 'ready':
       case 'stop':
-        Socket.connect();
+        // **** TODO: TEST AFTER CONFIRM CONNECT
+        // Socket.connect('/sentence');
         this.setState({ session: 'progress', btnMessage: '진료중..' });
         break;
       case 'progress':
-        Socket.close();
+        // **** TODO: TEST AFTER CONFIRM CONNECT
+        // Socket.close();
         this.setState({ session: 'stop', btnMessage: '진료시작' });
         break;
       default:

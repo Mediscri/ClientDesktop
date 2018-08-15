@@ -1,11 +1,43 @@
 // @flow
 import React, { Component } from 'react';
 import moment from 'moment';
+
+import { getChart } from '../../networks';
+
 import * as styled from './Styled';
 import InfoBar from './InfoBar';
 import Category from './Category';
 // component
 import Flex from '../../components/Flex';
+
+type Props = {};
+
+type State = {
+  data:
+    | {
+        +id: number,
+        +created_at: Date,
+        +patient: {
+          +id: number,
+          +name: string,
+          +age: number,
+          +sex: 'm' | 'f',
+        },
+        +doctor: {
+          +id: number,
+          +name: string,
+        },
+        categories: {
+          cc: Array<{ text: string, accuracy?: number }>, // chief complaint
+          pi: Array<{ text: string, accuracy?: number }>, // present illness
+          pmh: Array<{ text: string, accuracy?: number }>, // past medical history
+          fh: Array<{ text: string, accuracy?: number }>, // family history
+          sh: Array<{ text: string, accuracy?: number }>, // social history
+          ros: Array<{ text: string, accuracy?: number }>, // review of system
+        },
+      }
+    | { id: null },
+};
 
 // TODO: [REMOVE]Test data
 const data = {
@@ -111,7 +143,13 @@ const data = {
   ],
 };
 
-export default class Dashboard extends Component<{}> {
+export default class Dashboard extends Component<Props, State> {
+  state = { data: { id: null } };
+
+  componentDidMount() {
+    this.setState({ data: getChart(1) });
+  }
+
   render() {
     return (
       <Flex dir="column">
