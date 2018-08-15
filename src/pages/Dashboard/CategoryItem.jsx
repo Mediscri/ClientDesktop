@@ -20,7 +20,7 @@ type MenuProps = {
 type Props = {
   info: {
     text: string,
-    accuracy: number,
+    accuracy?: number,
   },
 };
 
@@ -57,14 +57,16 @@ export default class CategoryItem extends Component<Props, State> {
     const id = Math.random()
       .toString(36)
       .substr(2, 9);
-    const color = mixin.accuracyToColor(info.accuracy);
-    const accuracy = parseInt(info.accuracy, 10);
+
+    const accuracy = info.accuracy ? info.accuracy : 100;
+    const color = mixin.accuracyToColor(accuracy);
+    const percent = `${parseInt(accuracy, 10)}%`;
 
     return (
       <Fragment>
         <ContextMenuTrigger id={id}>
           <styled.ItemWrapper>
-            <styled.ItemAccuracy color={color}>{accuracy}%</styled.ItemAccuracy>
+            <styled.ItemAccuracy color={color}>{percent}</styled.ItemAccuracy>
             <styled.ItemText color={color}>{info.text}</styled.ItemText>
           </styled.ItemWrapper>
         </ContextMenuTrigger>

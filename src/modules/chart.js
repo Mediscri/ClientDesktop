@@ -4,10 +4,12 @@ import type { Dispatch } from 'redux';
 import produce from 'immer';
 // network
 import { getChartAPI } from '../networks';
+// type
+import type Moment from 'moment';
 
 type ChartNew = {|
   +id: number,
-  +created_at: Date,
+  +created_at: Moment,
   +patient: {
     +id: number,
     +name: string,

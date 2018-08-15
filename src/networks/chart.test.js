@@ -1,10 +1,12 @@
 // @flow
 import produce from 'immer';
 import moment from 'moment';
+// type
+import type Moment from 'moment';
 
 type Chart = {|
   +id: number,
-  +created_at: Date,
+  +created_at: Moment,
   +patient: {
     +id: number,
     +name: string,

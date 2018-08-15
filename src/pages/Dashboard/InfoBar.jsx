@@ -7,28 +7,30 @@ import Flex from '../../components/Flex';
 // type
 import type Moment from 'moment';
 
-const titleList = {
-  name: '환자명',
-  sex: '성별',
-  age: '나이',
-  created_at: '진료일자',
-};
-
-type Props = {
+type Props = {|
   data: {
-    name: string,
-    sex: 'M' | 'F',
-    age: string,
-    created_at: Moment,
-    categories: $ReadOnlyArray<{
-      title: string,
-      log: $ReadOnlyArray<{
-        accuracy: number,
-        text: string,
-      }>,
-    }>,
+    +id: number,
+    +created_at: Moment,
+    +patient: {
+      +id: number,
+      +name: string,
+      +age: number,
+      +sex: 'm' | 'f',
+    },
+    +doctor: {
+      +id: number,
+      +name: string,
+    },
+    categories: {
+      cc: Array<{| text: string, accuracy?: number |}>, // chief complaint
+      pi: Array<{| text: string, accuracy?: number |}>, // present illness
+      pmh: Array<{| text: string, accuracy?: number |}>, // past medical history
+      fh: Array<{| text: string, accuracy?: number |}>, // family history
+      sh: Array<{| text: string, accuracy?: number |}>, // social history
+      ros: Array<{| text: string, accuracy?: number |}>, // review of system
+    },
   },
-};
+|};
 
 type State = {
   session: 'ready' | 'progress' | 'stop',
@@ -39,6 +41,13 @@ export default class InfoBar extends Component<Props, State> {
   state = {
     session: 'ready',
     btnMessage: '진료시작',
+  };
+
+  title = {
+    name: '환자명',
+    sex: '성별',
+    age: '나이',
+    created_at: '진료일자',
   };
 
   handleButtonClick = () => {
@@ -62,15 +71,15 @@ export default class InfoBar extends Component<Props, State> {
     const { data } = this.props;
     return (
       <styled.InfoContainer>
-        {Object.keys(titleList).map(key => (
+        {Object.keys(this.title).map(key => (
           <Fragment key={key}>
             <styled.InfoWrapper>
-              <styled.InfoTitle>{titleList[key]}</styled.InfoTitle>
+              <styled.InfoTitle>{this.title[key]}</styled.InfoTitle>
               <Flex dir="column" option="flex: 1; justify-content: flex-end;">
                 <styled.InfoContent>
                   {key === 'created_at'
                     ? data[key].format('YYYY.MM.DD hh:mm')
-                    : data[key]}
+                    : data.patient[key]}
                 </styled.InfoContent>
               </Flex>
             </styled.InfoWrapper>

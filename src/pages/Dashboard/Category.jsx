@@ -10,20 +10,27 @@ type LogType = {
 };
 
 type Props = {
-  item: {
-    title: string,
-    log: $ReadOnlyArray<LogType>,
-  },
+  category: 'cc' | 'pi' | 'pmh' | 'fh' | 'sh' | 'ros',
+  item: Array<{| text: string, accuracy?: number |}>,
 };
 
-export default class Category extends Component<Props> {
+class Category extends Component<Props> {
+  title = {
+    cc: 'Chief Complaint',
+    pi: 'Present Illness',
+    pmh: 'Past Medical Histroy',
+    fh: 'Family History',
+    sh: 'Social History',
+    ros: 'Review Of System',
+  };
+
   render() {
-    const { title, log } = this.props.item;
+    const { category, item } = this.props;
     return (
       <styled.CategoryWrapper>
-        <styled.CategoryTitle>{title}</styled.CategoryTitle>
+        <styled.CategoryTitle>{this.title[category]}</styled.CategoryTitle>
         <styled.HrLarge />
-        {log.map(info => (
+        {item.map(info => (
           <Fragment key={info.text}>
             <CategroyItem info={info} />
             <styled.HrSmall />
@@ -33,3 +40,5 @@ export default class Category extends Component<Props> {
     );
   }
 }
+
+export default Category;
