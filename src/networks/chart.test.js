@@ -51,11 +51,13 @@ const response: Chart = {
   },
 };
 
-export const getChart = (id: number) => {
-  return produce(response, draft => {
-    for (const key in draft.categories) {
-      const value = draft.categories[key];
-      draft.categories[key] = JSON.parse(value);
-    }
-  });
-};
+export async function getChartAPI(id: number) {
+  return await Promise.resolve(
+    produce(response, draft => {
+      for (const key in draft.categories) {
+        const value = draft.categories[key];
+        draft.categories[key] = JSON.parse(value);
+      }
+    })
+  );
+}

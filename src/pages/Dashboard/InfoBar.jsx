@@ -2,8 +2,8 @@
 import React, { Component, Fragment } from 'react';
 import * as styled from './Styled';
 import Flex from '../../components/Flex';
-// network
-import { Socket } from '../../networks';
+// // network
+// import { Socket } from '../../networks';
 // type
 import type Moment from 'moment';
 

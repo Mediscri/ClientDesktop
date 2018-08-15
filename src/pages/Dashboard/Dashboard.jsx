@@ -1,8 +1,9 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
 
-import { getChart } from '../../networks';
+import { getChart } from '../../modules/chart';
 
 import * as styled from './Styled';
 import InfoBar from './InfoBar';
@@ -10,36 +11,38 @@ import Category from './Category';
 // component
 import Flex from '../../components/Flex';
 
-type Props = {};
+type Data = {|
+  +id: number,
+  +created_at: Date,
+  +patient: {
+    +id: number,
+    +name: string,
+    +age: number,
+    +sex: 'm' | 'f',
+  },
+  +doctor: {
+    +id: number,
+    +name: string,
+  },
+  categories: {
+    cc: Array<{ text: string, accuracy?: number }>, // chief complaint
+    pi: Array<{ text: string, accuracy?: number }>, // present illness
+    pmh: Array<{ text: string, accuracy?: number }>, // past medical history
+    fh: Array<{ text: string, accuracy?: number }>, // family history
+    sh: Array<{ text: string, accuracy?: number }>, // social history
+    ros: Array<{ text: string, accuracy?: number }>, // review of system
+  },
+|};
 
-type State = {
-  data:
-    | {
-        +id: number,
-        +created_at: Date,
-        +patient: {
-          +id: number,
-          +name: string,
-          +age: number,
-          +sex: 'm' | 'f',
-        },
-        +doctor: {
-          +id: number,
-          +name: string,
-        },
-        categories: {
-          cc: Array<{ text: string, accuracy?: number }>, // chief complaint
-          pi: Array<{ text: string, accuracy?: number }>, // present illness
-          pmh: Array<{ text: string, accuracy?: number }>, // past medical history
-          fh: Array<{ text: string, accuracy?: number }>, // family history
-          sh: Array<{ text: string, accuracy?: number }>, // social history
-          ros: Array<{ text: string, accuracy?: number }>, // review of system
-        },
-      }
-    | { id: null },
+type Props = {
+  data: Data,
+  GetChart: Function,
 };
 
-// TODO: [REMOVE]Test data
+type State = {
+  isLoaded: boolean,
+};
+
 const data = {
   name: '원지운',
   sex: 'M',
@@ -143,23 +146,37 @@ const data = {
   ],
 };
 
-export default class Dashboard extends Component<Props, State> {
-  state = { data: { id: null } };
+class Dashboard extends Component<Props, State> {
+  state = { isLoaded: false };
 
   componentDidMount() {
-    this.setState({ data: getChart(1) });
+    const { GetChart } = this.props;
+    GetChart(1).then(() => this.setState({ isLoaded: true }));
   }
 
   render() {
     return (
       <Flex dir="column">
-        <InfoBar data={data} />
-        <styled.Container>
-          {data.categories.map(item => (
-            <Category item={item} key={item.title} />
-          ))}
-        </styled.Container>
+        {this.state.isLoaded && (
+          <Fragment>
+            <InfoBar data={data} />
+            <styled.Container>
+              {data.categories.map(item => (
+                <Category item={item} key={item.title} />
+              ))}
+            </styled.Container>
+          </Fragment>
+        )}
       </Flex>
     );
   }
 }
+
+export default connect(
+  state => ({
+    data: state.chart,
+  }),
+  dispatch => ({
+    GetChart: (id: number) => getChart(id)(dispatch),
+  })
+)(Dashboard);

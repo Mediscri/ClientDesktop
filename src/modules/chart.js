@@ -1,5 +1,9 @@
 // @flow
+import type { Dispatch } from 'redux';
+// import { pender } from 'redux-pender';
 import produce from 'immer';
+// network
+import { getChartAPI } from '../networks';
 
 type ChartNew = {|
   +id: number,
@@ -36,17 +40,22 @@ type Item = {
 };
 
 // *** ACTION TYPE
-const GET_CHART = 'chart/GET_CHARTS';
+const GET_CHART = 'chart/GET_CHART';
 const CREATE_CHART = 'chart/CREATE_CHART';
 const CREATE_ITEM = 'chart/CREATE_ITEM';
 const UPDATE_ITEM = 'chart/UPDATE_ITEM';
 const DELETE_ITEM = 'chart/DELETE_ITEM';
 
+// *** ACTION WITH NETWORK
+export const getChart = (id: number) => (dispatch: Dispatch) =>
+  getChartAPI(id).then(data =>
+    dispatch({
+      type: GET_CHART,
+      payload: data,
+    })
+  );
+
 // *** ACTION FUNCTION
-export const getChart = (data: Chart) => ({
-  type: GET_CHART,
-  payload: data,
-});
 export const createChart = (data: ChartNew) => ({
   type: CREATE_CHART,
   payload: data,
@@ -97,7 +106,6 @@ export default function chart(
 ): Chart | ChartNew {
   switch (action.type) {
     case GET_CHART:
-      // ParseItem before dispatch
       return action.payload;
     case CREATE_CHART:
       return action.payload;
