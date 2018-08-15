@@ -1,7 +1,7 @@
 // @flow
 import React, { Component, Fragment } from 'react';
 import { MenuItem, ContextMenuTrigger } from 'react-contextmenu';
-import styled from './Styled';
+import * as styled from './Styled';
 import { mixin } from '../../styles';
 
 type data = {
@@ -32,13 +32,13 @@ const ContextMenuItem = ({ item, handleContextClick }: MenuProps) => (
   <MenuItem
     data={{ message: `you clicked@${item.name}` }}
     onClick={handleContextClick}>
-    <styled.Item>
-      <styled.ItemMessage>{item.name}</styled.ItemMessage>
-    </styled.Item>
+    <styled.MenuItem>
+      <styled.MenuItemMessage>{item.name}</styled.MenuItemMessage>
+    </styled.MenuItem>
   </MenuItem>
 );
 
-export default class CategoryRow extends Component<Props, State> {
+export default class CategoryItem extends Component<Props, State> {
   state = {
     menu: [
       { name: '편집' },
@@ -63,10 +63,10 @@ export default class CategoryRow extends Component<Props, State> {
     return (
       <Fragment>
         <ContextMenuTrigger id={id}>
-          <styled.RowWrapper>
-            <styled.RowAccuracy color={color}>{accuracy}%</styled.RowAccuracy>
-            <styled.RowText color={color}>{info.text}</styled.RowText>
-          </styled.RowWrapper>
+          <styled.ItemWrapper>
+            <styled.ItemAccuracy color={color}>{accuracy}%</styled.ItemAccuracy>
+            <styled.ItemText color={color}>{info.text}</styled.ItemText>
+          </styled.ItemWrapper>
         </ContextMenuTrigger>
         <styled.Menu id={id}>
           {this.state.menu.map(item => (
@@ -77,7 +77,6 @@ export default class CategoryRow extends Component<Props, State> {
             />
           ))}
         </styled.Menu>
-        <styled.HrSmall />
       </Fragment>
     );
   }

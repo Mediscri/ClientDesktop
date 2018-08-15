@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import moment from 'moment';
-import styled from './Styled';
+import * as styled from './Styled';
 import InfoBar from './InfoBar';
 import Category from './Category';
 // component

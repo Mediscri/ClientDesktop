@@ -1,6 +1,6 @@
 // @flow
 import React, { Component, Fragment } from 'react';
-import styled from './Styled';
+import * as styled from './Styled';
 import Flex from '../../components/Flex';
 // network
 import Socket from '../../networks/WebSocket';

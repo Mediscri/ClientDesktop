@@ -1,8 +1,8 @@
 // @flow
-import React, { Component } from 'react';
-import styled from './Styled';
+import React, { Component, Fragment } from 'react';
+import * as styled from './Styled';
 // component
-import CategroyRow from './CategoryRow';
+import CategroyItem from './CategoryItem';
 
 type LogType = {
   accuracy: number,
@@ -23,7 +23,12 @@ export default class Category extends Component<Props> {
       <styled.CategoryWrapper>
         <styled.CategoryTitle>{title}</styled.CategoryTitle>
         <styled.HrLarge />
-        {log.map(info => <CategroyRow info={info} key={info.text}/>)}
+        {log.map(info => (
+          <Fragment key={info.text}>
+            <CategroyItem info={info} />
+            <styled.HrSmall />
+          </Fragment>
+        ))}
       </styled.CategoryWrapper>
     );
   }
