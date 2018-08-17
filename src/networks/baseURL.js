@@ -17,7 +17,7 @@ function wsURL(mode: string) {
       return 'wss://www.mediscri.com/ws/v1';
     case DEVELOPMENT:
     default:
-      return 'ws://127.0.0.1:8000/ws/v1';
+      return 'ws://localhost:8000/ws/v1';
   }
 }
 

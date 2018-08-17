@@ -7,9 +7,9 @@ import { getChartAPI } from '../networks';
 // type
 import type Moment from 'moment';
 
-type ChartNew = {|
+export type ChartNew = {|
   +id: number,
-  +created_at: Moment,
+  +created: Moment,
   +patient: {
     +id: number,
     +name: string,
@@ -22,15 +22,15 @@ type ChartNew = {|
   },
 |};
 
-type Chart = {|
+export type Chart = {|
   ...ChartNew,
   categories: {
-    cc: Array<{ text: string, accuracy?: number }>, // chief complaint
-    pi: Array<{ text: string, accuracy?: number }>, // present illness
-    pmh: Array<{ text: string, accuracy?: number }>, // past medical history
-    fh: Array<{ text: string, accuracy?: number }>, // family history
-    sh: Array<{ text: string, accuracy?: number }>, // social history
-    ros: Array<{ text: string, accuracy?: number }>, // review of system
+    cc: Array<{| text: string, accuracy?: number |}>, // chief complaint
+    pi: Array<{| text: string, accuracy?: number |}>, // present illness
+    pmh: Array<{| text: string, accuracy?: number |}>, // past medical history
+    fh: Array<{| text: string, accuracy?: number |}>, // family history
+    sh: Array<{| text: string, accuracy?: number |}>, // social history
+    ros: Array<{| text: string, accuracy?: number |}>, // review of system
   },
 |};
 

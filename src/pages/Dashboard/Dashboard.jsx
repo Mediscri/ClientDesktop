@@ -8,33 +8,10 @@ import Category from './Category';
 // component
 import Flex from '../../components/Flex';
 // type
-import type Moment from 'moment';
-
-type Data = {|
-  +id: number,
-  +created_at: Moment,
-  +patient: {
-    +id: number,
-    +name: string,
-    +age: number,
-    +sex: 'm' | 'f',
-  },
-  +doctor: {
-    +id: number,
-    +name: string,
-  },
-  categories: {
-    cc: Array<{| text: string, accuracy?: number |}>, // chief complaint
-    pi: Array<{| text: string, accuracy?: number |}>, // present illness
-    pmh: Array<{| text: string, accuracy?: number |}>, // past medical history
-    fh: Array<{| text: string, accuracy?: number |}>, // family history
-    sh: Array<{| text: string, accuracy?: number |}>, // social history
-    ros: Array<{| text: string, accuracy?: number |}>, // review of system
-  },
-|};
+import type { Chart } from '../../modules/chart';
 
 type Props = {
-  data: Data,
+  data: Chart,
   GetChart: Function,
 };
 

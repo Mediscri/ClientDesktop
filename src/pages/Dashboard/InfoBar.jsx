@@ -5,32 +5,9 @@ import Flex from '../../components/Flex';
 // network
 import { Socket } from '../../networks';
 // type
-import type Moment from 'moment';
+import type { Chart } from '../../modules/chart';
 
-type Props = {|
-  data: {
-    +id: number,
-    +created_at: Moment,
-    +patient: {
-      +id: number,
-      +name: string,
-      +age: number,
-      +sex: 'm' | 'f',
-    },
-    +doctor: {
-      +id: number,
-      +name: string,
-    },
-    categories: {
-      cc: Array<{| text: string, accuracy?: number |}>, // chief complaint
-      pi: Array<{| text: string, accuracy?: number |}>, // present illness
-      pmh: Array<{| text: string, accuracy?: number |}>, // past medical history
-      fh: Array<{| text: string, accuracy?: number |}>, // family history
-      sh: Array<{| text: string, accuracy?: number |}>, // social history
-      ros: Array<{| text: string, accuracy?: number |}>, // review of system
-    },
-  },
-|};
+type Props = { data: Chart };
 
 type State = {
   session: 'ready' | 'progress' | 'stop',
@@ -47,20 +24,18 @@ export default class InfoBar extends Component<Props, State> {
     name: '환자명',
     sex: '성별',
     age: '나이',
-    created_at: '진료일자',
+    created: '진료일자',
   };
 
   handleButtonClick = () => {
     switch (this.state.session) {
       case 'ready':
       case 'stop':
-        // **** TODO: TEST AFTER CONFIRM CONNECT
         Socket.connect('/transcriptions/client/1/');
         this.setState({ session: 'progress', btnMessage: '진료중..' });
 
         break;
       case 'progress':
-        // **** TODO: TEST AFTER CONFIRM CONNECT
         Socket.close();
         this.setState({ session: 'stop', btnMessage: '진료시작' });
         break;
@@ -78,13 +53,13 @@ export default class InfoBar extends Component<Props, State> {
               <styled.InfoTitle>{this.title[key]}</styled.InfoTitle>
               <Flex dir="column" option="flex: 1; justify-content: flex-end;">
                 <styled.InfoContent>
-                  {key === 'created_at'
+                  {key === 'created'
                     ? data[key].format('YYYY.MM.DD hh:mm')
                     : data.patient[key]}
                 </styled.InfoContent>
               </Flex>
             </styled.InfoWrapper>
-            {key !== 'created_at' && <styled.Vr />}
+            {key !== 'created' && <styled.Vr />}
           </Fragment>
         ))}
         <styled.ButtonWrapper>

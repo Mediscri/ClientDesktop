@@ -23,10 +23,12 @@ class Socket {
 
     this.socket.onopen = e => {
       console.log('socket open');
+      // *** FOR TEST
+      this.send({ message: 'hello' });
     };
     this.socket.onmessage = e => {
       // TODO: dispatch to store
-      console.log(JSON.parse(e.data));
+      console.log(JSON.parse(JSON.parse(e.data)));
     };
     this.socket.onerror = e => {
       console.log(e);

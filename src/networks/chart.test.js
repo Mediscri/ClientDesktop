@@ -2,21 +2,10 @@
 import produce from 'immer';
 import moment from 'moment';
 // type
-import type Moment from 'moment';
+import type { ChartNew } from '../modules/chart';
 
 type Chart = {|
-  +id: number,
-  +created_at: Moment,
-  +patient: {
-    +id: number,
-    +name: string,
-    +age: number,
-    +sex: 'm' | 'f',
-  },
-  +doctor: {
-    +id: number,
-    +name: string,
-  },
+  ...ChartNew,
   categories: {
     cc: string, // chief complaint
     pi: string, // present illness
@@ -29,7 +18,7 @@ type Chart = {|
 
 const response: Chart = {
   id: 1,
-  created_at: moment(),
+  created: moment(),
   patient: {
     id: 4,
     name: '원지운',
