@@ -1,10 +1,7 @@
 // @flow
 import React, { Component, Fragment } from 'react';
-import moment from 'moment';
 import { connect } from 'react-redux';
-
 import { getChart } from '../../modules/chart';
-
 import * as styled from './Styled';
 import InfoBar from './InfoBar';
 import Category from './Category';

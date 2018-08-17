@@ -4,11 +4,6 @@ import * as styled from './Styled';
 // component
 import CategroyItem from './CategoryItem';
 
-type LogType = {
-  accuracy: number,
-  text: string,
-};
-
 type Props = {
   category: 'cc' | 'pi' | 'pmh' | 'fh' | 'sh' | 'ros',
   item: Array<{| text: string, accuracy?: number |}>,

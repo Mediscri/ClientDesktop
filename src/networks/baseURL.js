@@ -7,17 +7,17 @@ function httpURL(mode: string) {
       return 'https://www.mediscri.com/api/v1';
     case DEVELOPMENT:
     default:
-      return 'localhost:8000/api/v1';
+      return 'http://localhost:8000/api/v1';
   }
 }
 
 function wsURL(mode: string) {
   switch (mode) {
     case PRODUCTION:
-      return 'ws://https://www.mediscri.com/ws/v1';
+      return 'wss://www.mediscri.com/ws/v1';
     case DEVELOPMENT:
     default:
-      return 'ws://localhost:8000/ws/v1';
+      return 'ws://127.0.0.1:8000/ws/v1';
   }
 }
 
