@@ -28,12 +28,12 @@ class Dashboard extends Component<Props, State> {
   }
 
   render() {
-    const { categories } = this.props.data;
+    const { categories, ...patientInfo } = this.props.data;
     return (
       <Flex dir="column">
         {this.state.isLoaded && (
           <Fragment>
-            <InfoBar data={this.props.data} />
+            <InfoBar data={patientInfo} />
             <styled.Container>
               {Object.keys(categories).map(key => (
                 <Category item={categories[key]} category={key} key={key} />

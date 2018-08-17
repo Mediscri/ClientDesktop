@@ -3,10 +3,12 @@ import React, { Component, Fragment } from 'react';
 import * as styled from './Styled';
 // component
 import CategroyItem from './CategoryItem';
+// type
+import type { ChartItem } from '../../modules/chart';
 
 type Props = {
   category: 'cc' | 'pi' | 'pmh' | 'fh' | 'sh' | 'ros',
-  item: Array<{| text: string, accuracy?: number |}>,
+  item: Array<ChartItem>,
 };
 
 class Category extends Component<Props> {

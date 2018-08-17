@@ -22,15 +22,21 @@ export type ChartNew = {|
   },
 |};
 
+export type ChartItem = {|
+  text: string,
+  index: number,
+  accuracy?: number,
+|};
+
 export type Chart = {|
   ...ChartNew,
   categories: {
-    cc: Array<{| text: string, accuracy?: number |}>, // chief complaint
-    pi: Array<{| text: string, accuracy?: number |}>, // present illness
-    pmh: Array<{| text: string, accuracy?: number |}>, // past medical history
-    fh: Array<{| text: string, accuracy?: number |}>, // family history
-    sh: Array<{| text: string, accuracy?: number |}>, // social history
-    ros: Array<{| text: string, accuracy?: number |}>, // review of system
+    cc: Array<ChartItem>, // chief complaint
+    pi: Array<ChartItem>, // present illness
+    pmh: Array<ChartItem>, // past medical history
+    fh: Array<ChartItem>, // family history
+    sh: Array<ChartItem>, // social history
+    ros: Array<ChartItem>, // review of system
   },
 |};
 

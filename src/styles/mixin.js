@@ -29,8 +29,10 @@ const accuracyToColor = (accuracy: number) => {
     return color.red;
   } else if (accuracy < 80) {
     return color.yellow;
-  } else {
+  } else if (accuracy < 100) {
     return color.green;
+  } else {
+    return color.black;
   }
 };
 

@@ -114,6 +114,7 @@ export const ItemWrapper = styled.div`
 `;
 
 export const ItemAccuracy = styled.div`
+  ${props => props.color === color.black && `visibility: hidden;`};
   width: ${size.element.accuracy.size};
   height: ${size.element.accuracy.size};
   border-radius: ${size.element.accuracy.radius};

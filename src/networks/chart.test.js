@@ -48,6 +48,9 @@ export async function getChartAPI(id: number) {
       for (const key in draft.categories) {
         const value = draft.categories[key];
         draft.categories[key] = JSON.parse(value);
+        draft.categories[key].forEach((data, idx) => {
+          data.index = idx;
+        });
       }
     })
   );

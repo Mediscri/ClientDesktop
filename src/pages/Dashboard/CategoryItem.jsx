@@ -4,13 +4,8 @@ import { MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 import * as styled from './Styled';
 import { mixin } from '../../styles';
 
-type data = {
-  message: string,
-};
-
-type menu = {
-  name: string,
-};
+type data = { message: string };
+type menu = { name: string };
 
 type MenuProps = {
   item: menu,
