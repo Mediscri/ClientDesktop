@@ -26,7 +26,7 @@ class Socket {
     };
     this.socket.onmessage = e => {
       // TODO: dispatch to store
-      console.log(e.data);
+      console.log(JSON.parse(e.data));
     };
     this.socket.onerror = e => {
       console.log(e);
@@ -35,6 +35,10 @@ class Socket {
       console.log(`socket unexpectly closed, try to reconnect...`);
       this.connect(path);
     };
+  }
+
+  send(data) {
+    this.socket.send(JSON.stringify(data));
   }
 
   close() {

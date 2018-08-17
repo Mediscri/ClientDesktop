@@ -55,8 +55,9 @@ export default class InfoBar extends Component<Props, State> {
       case 'ready':
       case 'stop':
         // **** TODO: TEST AFTER CONFIRM CONNECT
-        Socket.connect('/transcriptions/client/abc123/');
+        Socket.connect('/transcriptions/client/1/');
         this.setState({ session: 'progress', btnMessage: '진료중..' });
+
         break;
       case 'progress':
         // **** TODO: TEST AFTER CONFIRM CONNECT
