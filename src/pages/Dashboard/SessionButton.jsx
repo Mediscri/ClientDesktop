@@ -1,45 +1,64 @@
 // @flow
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import * as styled from './Styled';
-// network
-import { Socket } from '../../networks';
+// action
+import { connectSocket, closeSocket } from '../../modules/socket';
 
-type Props = {};
+type Props = {
+  readyState: 'CONNECTING' | 'OPEN' | 'CLOSING' | 'CLOSED' | 'NULL',
+  ConnectSocket: Function,
+  CloseSocket: Function,
+};
+
+const message = {
+  START: '진료시작',
+  PROGRESS: '진료중..',
+  QUIT: '종료하기',
+};
 
 type State = {
-  session: 'ready' | 'progress' | 'stop',
-  btnMessage: '진료시작' | '진료중..' | '종료하기',
+  btnMessage:
+    | typeof message.START
+    | typeof message.PROGRESS
+    | typeof message.QUIT,
 };
 
 class SessionButton extends Component<Props, State> {
   state = {
-    session: 'ready',
-    btnMessage: '진료시작',
+    btnMessage: message.START,
   };
 
-  handleButtonClick = () => {
-    switch (this.state.session) {
-      case 'ready':
-      case 'stop':
-        Socket.connect('/transcriptions/client/1/');
-        this.setState({ session: 'progress', btnMessage: '진료중..' });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.readyState === 'OPEN') {
+      return prevState.btnMessage === message.START
+        ? { btnMessage: message.PROGRESS }
+        : null;
+    } else {
+      return { btnMessage: message.START };
+    }
+  }
 
-        break;
-      case 'progress':
-        Socket.close();
-        this.setState({ session: 'stop', btnMessage: '진료시작' });
+  handleButtonClick = () => {
+    const { readyState, ConnectSocket, CloseSocket } = this.props;
+    switch (readyState) {
+      case 'OPEN':
+        CloseSocket();
         break;
       default:
+        ConnectSocket('/transcriptions/client/1/');
+        break;
     }
   };
 
   render() {
+    const { readyState } = this.props;
     return (
       <styled.ButtonWrapper>
-        {this.state.session === 'progress' ? (
+        {readyState === 'OPEN' ? (
           <styled.ButtonProgress
-            onMouseEnter={() => this.setState({ btnMessage: '종료하기' })}
-            onMouseLeave={() => this.setState({ btnMessage: '진료중..' })}
+            onMouseEnter={() => this.setState({ btnMessage: message.QUIT })}
+            onMouseLeave={() => this.setState({ btnMessage: message.PROGRESS })}
             onClick={this.handleButtonClick}>
             {this.state.btnMessage}
           </styled.ButtonProgress>
@@ -53,4 +72,12 @@ class SessionButton extends Component<Props, State> {
   }
 }
 
-export default SessionButton;
+export default connect(
+  state => ({
+    readyState: state.socket.readyState,
+  }),
+  dispatch => ({
+    ConnectSocket: (url: string) => connectSocket(url)(dispatch),
+    CloseSocket: () => closeSocket(dispatch),
+  })
+)(SessionButton);

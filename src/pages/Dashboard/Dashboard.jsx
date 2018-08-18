@@ -8,6 +8,7 @@ import { getChart, moveItem } from '../../modules/chart';
 import * as styled from './Styled';
 import InfoBar from './InfoBar';
 import Category from './Category';
+import TextInput from './TextInput';
 // component
 import Flex from '../../components/Flex';
 // type
@@ -38,6 +39,7 @@ class Dashboard extends Component<Props, State> {
         {this.state.isLoaded && (
           <Fragment>
             <InfoBar data={patientInfo} />
+            <TextInput />
             <styled.Container>
               {Object.keys(categories).map(key => (
                 <Category item={categories[key]} category={key} key={key} />

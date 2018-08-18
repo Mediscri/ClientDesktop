@@ -137,6 +137,7 @@ export default function chart(
       return action.payload;
     case CREATE_ITEM: {
       const { category, nextText, accuracy } = action.payload;
+      // TODO:
       return produce(state, draft => {
         draft.categories[category].push({ text: nextText, accuracy });
       });
@@ -148,6 +149,7 @@ export default function chart(
         prevIndex,
         nextIndex,
       } = action.payload;
+      // TODO:
       return produce(state, draft => {
         const item = draft.categories[prevCategory].splice(prevIndex, 0);
         draft.categories[nextCategory].splice(nextIndex, 0, item);

@@ -1,4 +1,7 @@
 import { baseWS } from './baseURL';
+import { updateState } from '../modules/socket';
+// type
+import type { Dispatch } from 'redux';
 
 class Socket {
   socket: WebSocket;
@@ -18,23 +21,25 @@ class Socket {
     this.socket = null;
   }
 
-  connect(path) {
+  connect(path, dispatch: Dispatch) {
     this.socket = new WebSocket(baseWS + path);
+    updateState(dispatch);
 
     this.socket.onopen = e => {
-      console.log('socket open');
+      updateState(dispatch);
       // *** FOR TEST
       this.send({ message: 'hello' });
     };
     this.socket.onmessage = e => {
-      // TODO: dispatch to store
       console.log(JSON.parse(JSON.parse(e.data)));
     };
     this.socket.onerror = e => {
+      updateState(dispatch);
       console.log(e);
     };
     this.socket.onclose = () => {
       console.log(`socket unexpectly closed, try to reconnect...`);
+      updateState(dispatch);
       this.connect(path);
     };
   }
@@ -43,9 +48,9 @@ class Socket {
     this.socket.send(JSON.stringify(data));
   }
 
-  close() {
+  close(dispatch: Dispatch) {
     // @Override
-    this.socket.onclose = () => console.log(`socket closed`);
+    this.socket.onclose = () => updateState(dispatch);
     this.socket.close();
   }
 }
