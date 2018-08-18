@@ -6,22 +6,30 @@ import { updateItem, deleteItem } from '../../modules/chart';
 import * as styled from './Styled';
 import { mixin } from '../../styles';
 // flow
-import type { Item } from '../../modules/chart';
+import type { Item, ChartItem } from '../../modules/chart';
 
-type data = { menu: string };
-type menu = { name: string };
+const MENU_NAME = {
+  EDIT: '편집',
+  AUDIO: '원본 (음성)',
+  SCRIPT: '원본 (텍스트)',
+  DELETE: '삭제',
+};
 
-type MenuProps = {
-  item: menu,
-  handleContextClick: Function,
+type Menu = {|
+  +name:
+    | typeof MENU_NAME.EDIT
+    | typeof MENU_NAME.AUDIO
+    | typeof MENU_NAME.SCRIPT
+    | typeof MENU_NAME.DELETE,
+|};
+
+type ContextProps = {
+  +item: Menu,
+  +handleContextClick: Function,
 };
 
 type Props = {
-  info: {|
-    text: string,
-    index: number,
-    accuracy?: number,
-  |},
+  info: ChartItem,
   category: string,
   // dispatch function
   UpdateItem: Function,
@@ -29,11 +37,18 @@ type Props = {
 };
 
 type State = {
-  menu: Array<menu>,
+  editMode: boolean,
 };
 
-const ContextMenuItem = ({ item, handleContextClick }: MenuProps) => (
-  <MenuItem data={{ menu: item.name }} onClick={handleContextClick}>
+const menu: Array<Menu> = [
+  { name: MENU_NAME.EDIT },
+  { name: MENU_NAME.AUDIO },
+  { name: MENU_NAME.SCRIPT },
+  { name: MENU_NAME.DELETE },
+];
+
+const ContextMenuItem = ({ item, handleContextClick }: ContextProps) => (
+  <MenuItem data={{ name: item.name }} onClick={handleContextClick}>
     <styled.MenuItem>
       <styled.MenuItemMessage>{item.name}</styled.MenuItemMessage>
     </styled.MenuItem>
@@ -41,27 +56,20 @@ const ContextMenuItem = ({ item, handleContextClick }: MenuProps) => (
 );
 
 class CategoryItem extends Component<Props, State> {
-  state = {
-    menu: [
-      { name: '편집' },
-      { name: '원본 (음성)' },
-      { name: '원본 (텍스트)' },
-      { name: '삭제' },
-    ],
-  };
+  state = { editMode: false };
 
-  handleContextClick = (e: Event, data: data) => {
+  handleContextClick = (e: Event, data: Menu) => {
     const { category, info, UpdateItem, DeleteItem } = this.props;
-    switch (data.menu) {
-      case '편집':
+    switch (data.name) {
+      case MENU_NAME.EDIT:
         const text = '텍스트를 이렇게 바꿀거에요';
         UpdateItem({ category, index: info.index, nextText: text });
         break;
-      case '원본 (음성)':
+      case MENU_NAME.AUDIO:
         break;
-      case '원본 (텍스트)':
+      case MENU_NAME.SCRIPT:
         break;
-      case '삭제':
+      case MENU_NAME.DELETE:
         DeleteItem({ category, index: info.index });
         break;
       default:
@@ -70,7 +78,8 @@ class CategoryItem extends Component<Props, State> {
 
   render() {
     const { info } = this.props;
-    const id = Math.random()
+    // *** GENERATE RANDOM HASH
+    const hash = Math.random()
       .toString(36)
       .substr(2, 9);
 
@@ -80,14 +89,14 @@ class CategoryItem extends Component<Props, State> {
 
     return (
       <Fragment>
-        <ContextMenuTrigger id={id}>
+        <ContextMenuTrigger id={hash}>
           <styled.ItemWrapper>
             <styled.ItemAccuracy color={color}>{percent}</styled.ItemAccuracy>
             <styled.ItemText color={color}>{info.text}</styled.ItemText>
           </styled.ItemWrapper>
         </ContextMenuTrigger>
-        <styled.Menu id={id}>
-          {this.state.menu.map(item => (
+        <styled.Menu id={hash}>
+          {menu.map(item => (
             <ContextMenuItem
               item={item}
               handleContextClick={this.handleContextClick}

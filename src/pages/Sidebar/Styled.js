@@ -127,7 +127,4 @@ export const ModalButton = styled.button`
   box-sizing: border-box;
   font-size: ${size.font['16']};
   color: ${color.white};
-  &:hover {
-    cursor: pointer;
-  }
 `;

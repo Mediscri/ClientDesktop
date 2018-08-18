@@ -1,14 +1,14 @@
 import { baseWS } from './baseURL';
 import { updateState } from '../modules/socket';
+import { createItem } from '../modules/chart';
 // type
 import type { Dispatch } from 'redux';
 
 class Socket {
   socket: WebSocket;
 
-  static instance = null;
   callbacks = {};
-
+  static instance = null;
   static getInstance() {
     if (!Socket.instance) {
       Socket.instance = new Socket();
@@ -27,20 +27,37 @@ class Socket {
 
     this.socket.onopen = e => {
       updateState(dispatch);
-      // *** FOR TEST
-      this.send({ message: 'hello' });
     };
     this.socket.onmessage = e => {
-      console.log(JSON.parse(JSON.parse(e.data)));
+      const res = JSON.parse(JSON.parse(e.data));
+
+      let maxAccuracy = { accuracy: -1, category: null };
+      for (const data of res.deep_output) {
+        if (maxAccuracy.accuracy < data.accuracy) {
+          // TODO: remove toLowerCase() function
+          maxAccuracy = {
+            category: data.category.toLowerCase(),
+            accuracy: data.accuracy,
+          };
+        }
+      }
+
+      createItem({
+        ...maxAccuracy,
+        nextText: res.raw_sentence,
+      })(dispatch);
     };
     this.socket.onerror = e => {
-      updateState(dispatch);
       console.log(e);
+      updateState(dispatch);
     };
     this.socket.onclose = () => {
       console.log(`socket unexpectly closed, try to reconnect...`);
       updateState(dispatch);
-      this.connect(path);
+      this.connect(
+        path,
+        dispatch
+      );
     };
   }
 

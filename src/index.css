@@ -29,6 +29,7 @@ p {
   margin: 0;
 }
 
+button,
 a:hover {
   cursor: pointer;
 }

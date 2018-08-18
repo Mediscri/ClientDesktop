@@ -42,7 +42,7 @@ export type Chart = {|
 
 export type Item = {
   +category: string,
-  +index: number,
+  +index?: number,
   +nextText?: string,
   +accuracy?: number,
 };
@@ -71,13 +71,15 @@ export const getChart = (id: number) => (dispatch: Dispatch) =>
     })
   );
 
+export const createItem = (data: Item) => (dispatch: Dispatch) =>
+  dispatch({
+    type: CREATE_ITEM,
+    payload: data,
+  });
+
 // *** ACTION FUNCTION
 export const createChart = (data: ChartNew) => ({
   type: CREATE_CHART,
-  payload: data,
-});
-export const createItem = (data: Item) => ({
-  type: CREATE_ITEM,
   payload: data,
 });
 export const moveItem = (data: Move) => ({
@@ -137,19 +139,23 @@ export default function chart(
       return action.payload;
     case CREATE_ITEM: {
       const { category, nextText, accuracy } = action.payload;
-      // TODO:
       return produce(state, draft => {
-        draft.categories[category].push({ text: nextText, accuracy });
+        const index = draft.categories[category].length;
+        draft.categories[category].push({
+          text: nextText,
+          accuracy,
+          index,
+        });
       });
     }
     case MOVE_ITEM: {
+      // TODO: work Move Item function
       const {
         prevCategory,
         nextCategory,
         prevIndex,
         nextIndex,
       } = action.payload;
-      // TODO:
       return produce(state, draft => {
         const item = draft.categories[prevCategory].splice(prevIndex, 0);
         draft.categories[nextCategory].splice(nextIndex, 0, item);
@@ -167,7 +173,7 @@ export default function chart(
       const { category, index } = action.payload;
       return produce(state, draft => {
         draft.categories[category].splice(index, 1);
-        // reset index
+        // *** RESET INDEX
         draft.categories[category].forEach((data, idx) => {
           data.index = idx;
         });
