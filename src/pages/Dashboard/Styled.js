@@ -134,6 +134,18 @@ export const ItemText = styled.p`
   margin: ${size.space['14']} 0;
 `;
 
+export const ItemEditForm = styled.form`
+  flex: 1;
+`;
+
+export const ItemEdit = styled.input`
+  width: 100%;
+  border: none;
+  font-size: ${size.font['14']};
+  padding: ${size.space['14']} 0;
+  background: ${color.lighter_gray};
+`;
+
 export const HrSmall = styled.div`
   margin-left: ${mixin.calcSize(`${size.element.accuracy.size} + 1rem`)};
   border: ${color.lighter_gray} 0.5px solid;
@@ -143,7 +155,7 @@ export const HrSmall = styled.div`
 `;
 
 // context
-export const Menu = styled(ContextMenu)`
+export const MenuContainer = styled(ContextMenu)`
   min-width: ${size.container.context};
   padding: ${size.space['8']} ${size.space['12']};
   background-color: ${color.white};
@@ -151,7 +163,7 @@ export const Menu = styled(ContextMenu)`
   border-radius: ${size.element.context.radius};
 `;
 
-export const MenuItem = styled.div`
+export const MenuItemWrapper = styled.div`
   padding: ${size.space['6']};
   margin: 0 -${size.space['6']};
   &:hover {
@@ -160,7 +172,7 @@ export const MenuItem = styled.div`
   }
 `;
 
-export const MenuItemMessage = styled.p`
+export const MenuName = styled.p`
   color: ${color.black};
   font-size: ${size.font['14']};
 `;

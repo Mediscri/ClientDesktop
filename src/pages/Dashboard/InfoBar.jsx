@@ -6,7 +6,9 @@ import SessionButton from './SessionButton';
 // type
 import type { ChartNew } from '../../modules/chart';
 
-type Props = {| data: ChartNew |};
+type Props = {|
+  data: ChartNew,
+|};
 
 const title = {
   name: '환자명',

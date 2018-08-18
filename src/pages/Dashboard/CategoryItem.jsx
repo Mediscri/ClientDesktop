@@ -24,7 +24,7 @@ type Menu = {|
 |};
 
 type ContextProps = {
-  +item: Menu,
+  +menu: Menu,
   +handleContextClick: Function,
 };
 
@@ -38,32 +38,32 @@ type Props = {
 
 type State = {
   editMode: boolean,
+  text: string,
 };
 
-const menu: Array<Menu> = [
+const menuList: Array<Menu> = [
   { name: MENU_NAME.EDIT },
   { name: MENU_NAME.AUDIO },
   { name: MENU_NAME.SCRIPT },
   { name: MENU_NAME.DELETE },
 ];
 
-const ContextMenuItem = ({ item, handleContextClick }: ContextProps) => (
-  <MenuItem data={{ name: item.name }} onClick={handleContextClick}>
-    <styled.MenuItem>
-      <styled.MenuItemMessage>{item.name}</styled.MenuItemMessage>
-    </styled.MenuItem>
+const ContextMenuItem = ({ menu, handleContextClick }: ContextProps) => (
+  <MenuItem data={menu} onClick={handleContextClick}>
+    <styled.MenuItemWrapper>
+      <styled.MenuName>{menu.name}</styled.MenuName>
+    </styled.MenuItemWrapper>
   </MenuItem>
 );
 
 class CategoryItem extends Component<Props, State> {
-  state = { editMode: false };
+  state = { editMode: false, text: this.props.info.text };
 
   handleContextClick = (e: Event, data: Menu) => {
-    const { category, info, UpdateItem, DeleteItem } = this.props;
+    const { category, info, DeleteItem } = this.props;
     switch (data.name) {
       case MENU_NAME.EDIT:
-        const text = '텍스트를 이렇게 바꿀거에요';
-        UpdateItem({ category, index: info.index, nextText: text });
+        this.setState({ editMode: true });
         break;
       case MENU_NAME.AUDIO:
         break;
@@ -74,6 +74,17 @@ class CategoryItem extends Component<Props, State> {
         break;
       default:
     }
+  };
+
+  handleChage = (e: SyntheticInputEvent<EventTarget>) =>
+    this.setState({ [e.target.name]: e.target.value });
+
+  handleSubmit = (e: Event) => {
+    const { category, info, UpdateItem } = this.props;
+    e.preventDefault();
+
+    UpdateItem({ category, index: info.index, nextText: this.state.text });
+    this.setState({ editMode: false });
   };
 
   render() {
@@ -92,18 +103,30 @@ class CategoryItem extends Component<Props, State> {
         <ContextMenuTrigger id={hash}>
           <styled.ItemWrapper>
             <styled.ItemAccuracy color={color}>{percent}</styled.ItemAccuracy>
-            <styled.ItemText color={color}>{info.text}</styled.ItemText>
+            {this.state.editMode ? (
+              <styled.ItemEditForm onSubmit={this.handleSubmit}>
+                <styled.ItemEdit
+                  autoFocus
+                  name="text"
+                  value={this.state.text}
+                  onChange={this.handleChage}
+                  onBlur={this.handleSubmit}
+                />
+              </styled.ItemEditForm>
+            ) : (
+              <styled.ItemText color={color}>{info.text}</styled.ItemText>
+            )}
           </styled.ItemWrapper>
         </ContextMenuTrigger>
-        <styled.Menu id={hash}>
-          {menu.map(item => (
+        <styled.MenuContainer id={hash}>
+          {menuList.map(menu => (
             <ContextMenuItem
-              item={item}
+              menu={menu}
               handleContextClick={this.handleContextClick}
-              key={item.name}
+              key={menu.name}
             />
           ))}
-        </styled.Menu>
+        </styled.MenuContainer>
       </Fragment>
     );
   }
