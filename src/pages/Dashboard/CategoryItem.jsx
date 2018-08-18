@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 import { updateItem, deleteItem } from '../../modules/chart';
@@ -63,7 +63,9 @@ class CategoryItem extends Component<Props, State> {
     const { category, info, DeleteItem } = this.props;
     switch (data.name) {
       case MENU_NAME.EDIT:
-        this.setState({ editMode: true });
+        if (!this.state.editMode) {
+          this.setState({ editMode: true });
+        }
         break;
       case MENU_NAME.AUDIO:
         break;
@@ -73,6 +75,12 @@ class CategoryItem extends Component<Props, State> {
         DeleteItem({ category, index: info.index });
         break;
       default:
+    }
+  };
+
+  handleDoubleClick = (e: Event) => {
+    if (!this.state.editMode) {
+      this.setState({ editMode: true });
     }
   };
 
@@ -99,9 +107,9 @@ class CategoryItem extends Component<Props, State> {
     const percent = `${parseInt(accuracy, 10)}%`;
 
     return (
-      <Fragment>
+      <div>
         <ContextMenuTrigger id={hash}>
-          <styled.ItemWrapper>
+          <styled.ItemWrapper onDoubleClick={this.handleDoubleClick}>
             <styled.ItemAccuracy color={color}>{percent}</styled.ItemAccuracy>
             {this.state.editMode ? (
               <styled.ItemEditForm onSubmit={this.handleSubmit}>
@@ -127,7 +135,7 @@ class CategoryItem extends Component<Props, State> {
             />
           ))}
         </styled.MenuContainer>
-      </Fragment>
+      </div>
     );
   }
 }

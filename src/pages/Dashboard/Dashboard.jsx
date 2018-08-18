@@ -1,16 +1,12 @@
 // @flow
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 
 import { getChart, moveItem } from '../../modules/chart';
 import * as styled from './Styled';
 import InfoBar from './InfoBar';
 import Category from './Category';
 import TextInput from './TextInput';
-// component
-import Flex from '../../components/Flex';
 // type
 import type { Chart, Move } from '../../modules/chart';
 
@@ -33,22 +29,22 @@ class Dashboard extends Component<Props, State> {
   }
 
   render() {
-    const { categories, ...patientInfo } = this.props.data;
+    const { data } = this.props;
+    const { categories, ...patientInfo } = data;
+
     return (
-      <Flex dir="column">
-        {this.state.isLoaded && (
-          <Fragment>
-            <InfoBar data={patientInfo} />
-            {/* TODO: Remove TextInput after classification test is done */}
-            <TextInput />
-            <styled.Container>
-              {Object.keys(categories).map(key => (
-                <Category item={categories[key]} category={key} key={key} />
-              ))}
-            </styled.Container>
-          </Fragment>
-        )}
-      </Flex>
+      this.state.isLoaded && (
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <InfoBar data={patientInfo} />
+          {/* TODO: Remove TextInput after classification test is done */}
+          <TextInput />
+          <styled.Container>
+            {Object.keys(categories).map(key => (
+              <Category item={categories[key]} category={key} key={key} />
+            ))}
+          </styled.Container>
+        </div>
+      )
     );
   }
 }
@@ -61,4 +57,4 @@ export default connect(
     GetChart: (id: number) => getChart(id)(dispatch),
     MoveChart: (move: Move) => moveItem(move),
   })
-)(DragDropContext(HTML5Backend)(Dashboard));
+)(Dashboard);
