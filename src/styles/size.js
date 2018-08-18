@@ -32,6 +32,9 @@ const space = {
   between_categroies: '2.8rem',
   between_texts: '1.2rem',
   // number
+  6: '0.6rem',
+  8: '0.8rem',
+  12: '1.2rem',
   14: '1.4rem',
   20: '2rem',
 };
@@ -40,6 +43,7 @@ const container = {
   // width
   sidebar: '26.8rem',
   modal_dropdown: '20rem',
+  context: '20rem',
   // height
   navbar: '8rem',
   // both
@@ -51,14 +55,10 @@ const container = {
     width: '39rem',
     height: '19.8rem',
   },
-  context_menu: {
-    width: '20rem',
-    height: '14.4rem',
-  },
 };
 
 const wrapper = {
-  login: {
+  input: {
     width: '40.7rem',
   },
   category: {
@@ -78,8 +78,8 @@ const element = {
     width: '4px',
     height: '48.5rem',
   },
-  login_input: {
-    width: wrapper.login.width,
+  input: {
+    width: wrapper.input.width,
     height: '5.2rem',
     border: '0.3rem',
     radius: '0.8rem',
@@ -100,6 +100,10 @@ const element = {
     size: '3rem',
     radius: '1.5rem',
   },
+  context: {
+    border: '0.1rem',
+    radius: '0.4rem',
+  },
 };
 
 const font = {
@@ -108,6 +112,7 @@ const font = {
   16: '1.6rem',
   18: '1.8rem',
   20: '2rem',
+  26: '2.6rem',
 };
 
 export default { icon, space, wrapper, container, element, font };

@@ -1,43 +1,41 @@
 // @flow
 import React, { Component, Fragment } from 'react';
-import styled from './Styled';
-import Flex from '../../components/Flex';
-import { mixin } from '../../styles';
-
-type LogType = {
-  accuracy: number,
-  text: string,
-};
+import * as styled from './Styled';
+// component
+import CategroyItem from './CategoryItem';
+// type
+import type { ChartItem } from '../../modules/chart';
 
 type Props = {
-  item: {
-    title: string,
-    log: $ReadOnlyArray<LogType>,
-  },
+  category: 'cc' | 'pi' | 'pmh' | 'fh' | 'sh' | 'ros',
+  item: Array<ChartItem>,
 };
 
-export default class Category extends Component<Props> {
+class Category extends Component<Props> {
+  title = {
+    cc: 'Chief Complaint',
+    pi: 'Present Illness',
+    pmh: 'Past Medical Histroy',
+    fh: 'Family History',
+    sh: 'Social History',
+    ros: 'Review Of System',
+  };
+
   render() {
-    const { title, log } = this.props.item;
+    const { category, item } = this.props;
     return (
       <styled.CategoryWrapper>
-        <styled.CategoryTitle>{title}</styled.CategoryTitle>
+        <styled.CategoryTitle>{this.title[category]}</styled.CategoryTitle>
         <styled.HrLarge />
-        {log.map(info => {
-          const color = mixin.accuracyToColor(info.accuracy);
-          return (
-            <Fragment key={info.text}>
-              <Flex option="align-items: center;">
-                <styled.LogAccuracy color={color}>
-                  {`${parseInt(info.accuracy, 10)}%`}
-                </styled.LogAccuracy>
-                <styled.LogText color={color}>{info.text}</styled.LogText>
-              </Flex>
-              <styled.HrSmall />
-            </Fragment>
-          );
-        })}
+        {item.map(info => (
+          <Fragment key={`${info.index}${info.text}`}>
+            <CategroyItem info={info} category={category} />
+            <styled.HrSmall />
+          </Fragment>
+        ))}
       </styled.CategoryWrapper>
     );
   }
 }
+
+export default Category;

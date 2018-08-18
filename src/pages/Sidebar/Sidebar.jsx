@@ -1,9 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import moment from 'moment';
-import styled from './Styled';
+import * as styled from './Styled';
 // component
 import History from './History';
+import ModalCreate from './ModalCreate';
 
 // TODO: [REMOVE]Test data
 const list = [
@@ -13,17 +14,17 @@ const list = [
       {
         name: '원지운',
         accuracy: 89.6,
-        pi: '섬근육통',
+        cc: '섬근육통',
       },
       {
         name: '김동민',
         accuracy: 69.3,
-        pi: '퇴행성 관절염',
+        cc: '퇴행성 관절염',
       },
       {
         name: '레자바지',
         accuracy: 74.5,
-        pi: '섬근육통',
+        cc: '섬근육통',
       },
     ],
   },
@@ -33,12 +34,12 @@ const list = [
       {
         name: '손흥민',
         accuracy: 84.7,
-        pi: '섬근육통',
+        cc: '섬근육통',
       },
       {
         name: '장현수',
         accuracy: 72.5,
-        pi: '퇴행성 관절염',
+        cc: '퇴행성 관절염',
       },
     ],
   },
@@ -48,17 +49,17 @@ const list = [
       {
         name: '정준일',
         accuracy: 68.5,
-        pi: '섬근육통',
+        cc: '섬근육통',
       },
       {
         name: '로이킴',
         accuracy: 84.3,
-        pi: '퇴행성 관절염',
+        cc: '퇴행성 관절염',
       },
       {
         name: '윤하',
         accuracy: 85.9,
-        pi: '섬근육통',
+        cc: '섬근육통',
       },
     ],
   },
@@ -68,26 +69,44 @@ const list = [
       {
         name: '손흥민',
         accuracy: 84.7,
-        pi: '섬근육통',
+        cc: '섬근육통',
       },
       {
         name: '장현수',
         accuracy: 72.5,
-        pi: '퇴행성 관절염',
+        cc: '퇴행성 관절염',
       },
     ],
   },
 ];
 
-export default class Sidebar extends Component<{}> {
+type Props = {};
+
+type State = {
+  create_chart: boolean,
+};
+
+export default class Sidebar extends Component<Props, State> {
+  state = { create_chart: false };
+
+  handleClickCreate = () => this.setState({ create_chart: true });
+  handleDismiss = () => this.setState({ create_chart: false });
+
   render() {
     return (
       <styled.Container>
-        <styled.CreateBoard>신규 진료</styled.CreateBoard>
+        <styled.CreateChart onClick={this.handleClickCreate}>
+          신규 진료
+        </styled.CreateChart>
         <styled.HistoryContainer>
           <styled.Hr />
-          {list.map(data => <History data={data} key={data.date} />)}
+          {list.map(data => (
+            <History data={data} key={data.date} />
+          ))}
         </styled.HistoryContainer>
+        {this.state.create_chart && (
+          <ModalCreate handleDismiss={this.handleDismiss} />
+        )}
       </styled.Container>
     );
   }

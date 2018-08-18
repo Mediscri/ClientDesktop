@@ -29,6 +29,13 @@ p {
   margin: 0;
 }
 
+button,
 a:hover {
   cursor: pointer;
+}
+
+button:focus,
+div:focus,
+nav:focus {
+  outline: none;
 }
