@@ -40,17 +40,25 @@ export type Chart = {|
   },
 |};
 
-type Item = {
+export type Item = {
   +category: string,
-  +prevText?: string,
+  +index: number,
   +nextText?: string,
   +accuracy?: number,
+};
+
+export type Move = {
+  +prevCategory: string,
+  +nextCategory: string,
+  +prevIndex: number,
+  +nextIndex: number,
 };
 
 // *** ACTION TYPE
 const GET_CHART = 'chart/GET_CHART';
 const CREATE_CHART = 'chart/CREATE_CHART';
 const CREATE_ITEM = 'chart/CREATE_ITEM';
+const MOVE_ITEM = 'chart/MOVE_ITEM';
 const UPDATE_ITEM = 'chart/UPDATE_ITEM';
 const DELETE_ITEM = 'chart/DELETE_ITEM';
 
@@ -72,14 +80,20 @@ export const createItem = (data: Item) => ({
   type: CREATE_ITEM,
   payload: data,
 });
-export const updateItem = (data: Item) => ({
-  type: UPDATE_ITEM,
+export const moveItem = (data: Move) => ({
+  type: MOVE_ITEM,
   payload: data,
 });
-export const deleteItem = (data: Item) => ({
-  type: DELETE_ITEM,
-  payload: data,
-});
+export const updateItem = (data: Item) => (dispatch: Dispatch) =>
+  dispatch({
+    type: UPDATE_ITEM,
+    payload: data,
+  });
+export const deleteItem = (data: Item) => (dispatch: Dispatch) =>
+  dispatch({
+    type: DELETE_ITEM,
+    payload: data,
+  });
 
 // *** INITIAL STATE
 const initState = { id: null };
@@ -97,6 +111,10 @@ type Action =
   | {|
       +type: typeof CREATE_ITEM,
       +payload: Item,
+    |}
+  | {|
+      +type: typeof MOVE_ITEM,
+      +payload: Move,
     |}
   | {|
       +type: typeof UPDATE_ITEM,
@@ -123,20 +141,34 @@ export default function chart(
         draft.categories[category].push({ text: nextText, accuracy });
       });
     }
-    case UPDATE_ITEM: {
-      const { category, prevText, nextText } = action.payload;
+    case MOVE_ITEM: {
+      const {
+        prevCategory,
+        nextCategory,
+        prevIndex,
+        nextIndex,
+      } = action.payload;
       return produce(state, draft => {
-        const update = draft.categories[category].find(
-          data => data.text === prevText
-        );
+        const item = draft.categories[prevCategory].splice(prevIndex, 0);
+        draft.categories[nextCategory].splice(nextIndex, 0, item);
+      });
+    }
+    case UPDATE_ITEM: {
+      const { category, index, nextText } = action.payload;
+      return produce(state, draft => {
+        const update = draft.categories[category][index];
         update.text = nextText;
         update.accuracy = 100;
       });
     }
     case DELETE_ITEM:
-      const { category, prevText } = action.payload;
+      const { category, index } = action.payload;
       return produce(state, draft => {
-        draft.categories[category].filter(data => data.text !== prevText);
+        draft.categories[category].splice(index, 1);
+        // reset index
+        draft.categories[category].forEach((data, idx) => {
+          data.index = idx;
+        });
       });
     default:
       return state;

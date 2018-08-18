@@ -1,18 +1,22 @@
 // @flow
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { getChart } from '../../modules/chart';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
+import { getChart, moveItem } from '../../modules/chart';
 import * as styled from './Styled';
 import InfoBar from './InfoBar';
 import Category from './Category';
 // component
 import Flex from '../../components/Flex';
 // type
-import type { Chart } from '../../modules/chart';
+import type { Chart, Move } from '../../modules/chart';
 
 type Props = {
   data: Chart,
   GetChart: Function,
+  MoveChart: Function,
 };
 
 type State = {
@@ -52,5 +56,6 @@ export default connect(
   }),
   dispatch => ({
     GetChart: (id: number) => getChart(id)(dispatch),
+    MoveChart: (move: Move) => moveItem(move),
   })
-)(Dashboard);
+)(DragDropContext(HTML5Backend)(Dashboard));

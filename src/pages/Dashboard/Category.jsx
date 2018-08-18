@@ -28,8 +28,8 @@ class Category extends Component<Props> {
         <styled.CategoryTitle>{this.title[category]}</styled.CategoryTitle>
         <styled.HrLarge />
         {item.map(info => (
-          <Fragment key={info.text}>
-            <CategroyItem info={info} />
+          <Fragment key={`${info.index}${info.text}`}>
+            <CategroyItem info={info} category={category} />
             <styled.HrSmall />
           </Fragment>
         ))}

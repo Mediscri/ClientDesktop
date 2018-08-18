@@ -1,10 +1,14 @@
 // @flow
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import { MenuItem, ContextMenuTrigger } from 'react-contextmenu';
+import { updateItem, deleteItem } from '../../modules/chart';
 import * as styled from './Styled';
 import { mixin } from '../../styles';
+// flow
+import type { Item } from '../../modules/chart';
 
-type data = { message: string };
+type data = { menu: string };
 type menu = { name: string };
 
 type MenuProps = {
@@ -13,10 +17,15 @@ type MenuProps = {
 };
 
 type Props = {
-  info: {
+  info: {|
     text: string,
+    index: number,
     accuracy?: number,
-  },
+  |},
+  category: string,
+  // dispatch function
+  UpdateItem: Function,
+  DeleteItem: Function,
 };
 
 type State = {
@@ -24,16 +33,14 @@ type State = {
 };
 
 const ContextMenuItem = ({ item, handleContextClick }: MenuProps) => (
-  <MenuItem
-    data={{ message: `you clicked@${item.name}` }}
-    onClick={handleContextClick}>
+  <MenuItem data={{ menu: item.name }} onClick={handleContextClick}>
     <styled.MenuItem>
       <styled.MenuItemMessage>{item.name}</styled.MenuItemMessage>
     </styled.MenuItem>
   </MenuItem>
 );
 
-export default class CategoryItem extends Component<Props, State> {
+class CategoryItem extends Component<Props, State> {
   state = {
     menu: [
       { name: '편집' },
@@ -44,7 +51,21 @@ export default class CategoryItem extends Component<Props, State> {
   };
 
   handleContextClick = (e: Event, data: data) => {
-    console.log(data);
+    const { category, info, UpdateItem, DeleteItem } = this.props;
+    switch (data.menu) {
+      case '편집':
+        const text = '텍스트를 이렇게 바꿀거에요';
+        UpdateItem({ category, index: info.index, nextText: text });
+        break;
+      case '원본 (음성)':
+        break;
+      case '원본 (텍스트)':
+        break;
+      case '삭제':
+        DeleteItem({ category, index: info.index });
+        break;
+      default:
+    }
   };
 
   render() {
@@ -78,3 +99,11 @@ export default class CategoryItem extends Component<Props, State> {
     );
   }
 }
+
+export default connect(
+  () => ({}),
+  dispatch => ({
+    UpdateItem: (data: Item) => updateItem(data)(dispatch),
+    DeleteItem: (data: Item) => deleteItem(data)(dispatch),
+  })
+)(CategoryItem);
