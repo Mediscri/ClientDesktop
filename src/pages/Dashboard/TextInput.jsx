@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 // network
-import { Socket } from '../../networks';
+import { socket } from '../../networks';
 // type
 import type { State as SocketState } from '../../modules/socket';
 
@@ -54,7 +54,7 @@ class TextInput extends Component<Props, State> {
 
   handleSubmit = (e: Event) => {
     e.preventDefault();
-    Socket.send({ ...this.state, patient_id: this.props.patientId });
+    socket.send({ ...this.state, patient_id: this.props.patientId });
     this.setState({ sentence: '' });
   };
 

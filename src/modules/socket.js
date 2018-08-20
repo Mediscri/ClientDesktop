@@ -1,7 +1,7 @@
 // @flow
 import produce from 'immer';
 // network
-import { Socket } from '../networks';
+import { socket as Socket } from '../networks';
 // type
 import type { Dispatch } from 'redux';
 
@@ -45,7 +45,8 @@ export default function socket(state: State = initState, action: Action) {
   switch (action.type) {
     case UPDATE_STATE:
       return produce(state, draft => {
-        draft.readyState = EnumState[Socket.socket.readyState];
+        const { socket } = Socket;
+        draft.readyState = EnumState[socket.readyState];
       });
     default:
       return state;

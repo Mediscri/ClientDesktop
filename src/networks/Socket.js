@@ -1,14 +1,15 @@
-import { baseWS } from './baseURL';
 import { updateState } from '../modules/socket';
 import { createItem } from '../modules/chart';
 // type
 import type { Dispatch } from 'redux';
 
 class Socket {
+  // type
   socket: WebSocket;
 
-  callbacks = {};
   static instance = null;
+  static baseURL: string = null;
+
   static getInstance() {
     if (!Socket.instance) {
       Socket.instance = new Socket();
@@ -16,13 +17,19 @@ class Socket {
     return Socket.instance;
   }
 
+  static setBaseURL(baseURL: string) {
+    if (!Socket.baseURL) {
+      Socket.baseURL = baseURL;
+    }
+  }
+
   constructor() {
     //$FlowFixMe
     this.socket = null;
   }
 
-  connect(path, dispatch: Dispatch) {
-    this.socket = new WebSocket(baseWS + path);
+  connect(path: string, dispatch: Dispatch) {
+    this.socket = new WebSocket(Socket.baseURL + path);
     updateState(dispatch);
 
     this.socket.onopen = e => {
@@ -72,5 +79,4 @@ class Socket {
   }
 }
 
-const SocketInstance: Socket = Socket.getInstance();
-export default SocketInstance;
+export default Socket;

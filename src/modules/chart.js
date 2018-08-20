@@ -3,7 +3,7 @@ import type { Dispatch } from 'redux';
 // import { pender } from 'redux-pender';
 import produce from 'immer';
 // network
-import { getChartAPI } from '../networks';
+import { Chart as ChartAPI } from '../networks';
 // type
 import type Moment from 'moment';
 
@@ -64,7 +64,7 @@ const DELETE_ITEM = 'chart/DELETE_ITEM';
 
 // *** ACTION WITH NETWORK
 export const getChart = (id: number) => (dispatch: Dispatch) =>
-  getChartAPI(id).then(data =>
+  ChartAPI.get(id).then(data =>
     dispatch({
       type: GET_CHART,
       payload: data,
