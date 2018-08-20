@@ -43,7 +43,6 @@ async function get(id: number) {
   return await Promise.resolve(
     produce(response, draft => {
       for (const key in draft.categories) {
-        const value = draft.categories[key];
         draft.categories[key].forEach((data, idx) => {
           data.index = idx;
         });

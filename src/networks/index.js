@@ -16,9 +16,16 @@ function setAxios(mode: string) {
       baseURL = 'http://localhost:8000/api/v1';
       break;
     default:
+      console.log(`INVALID MODE. ${MODE}`);
+      return;
   }
 
-  const instance = axios.create({ baseURL });
+  const instance = axios.create({
+    baseURL,
+    headers: {
+      Authorization: 'TOKEN 47820c0faa73dee026e3dd24fcd029880312420f',
+    },
+  });
   return instance;
 }
 
@@ -32,15 +39,18 @@ function setWebSocket(mode: string) {
       baseURL = 'ws://localhost:8000/ws/v1';
       break;
     default:
+      console.log(`INVALID MODE. ${MODE}`);
+      return;
   }
 
-  const instance = WebSocket.getInstance();
   WebSocket.setBaseURL(baseURL);
+  const instance = WebSocket.getInstance();
   return instance;
 }
 
-// http(axios), socket instance
+// *** HTTP, SOCKET INSTANCE
 export const http = setAxios(MODE);
 export const socket = setWebSocket(MODE);
-// specific network modules
+
+// *** SPECIFIC NETWORK MODULES
 export { default as Chart } from './chart.test';
