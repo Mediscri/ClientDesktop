@@ -14,7 +14,7 @@ export type ChartNew = {|
     +id: number,
     +name: string,
     +age: number,
-    +sex: 'm' | 'f',
+    +gender: 'm' | 'f',
   },
   +doctor: {
     +id: number,

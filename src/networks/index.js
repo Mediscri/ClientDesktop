@@ -1,5 +1,8 @@
+// @flow
 import axios from 'axios';
 import WebSocket from './Socket';
+// type
+import type Axios from 'axios';
 
 const DEVELOPMENT = 'DEVELOPMENT';
 const PRODUCTION = 'PRODUCTION';
@@ -44,8 +47,8 @@ function setWebSocket(mode: string) {
 }
 
 // *** HTTP, SOCKET INSTANCE
-export const http = setAxios(MODE);
-export const socket = setWebSocket(MODE);
+export const http: Axios = setAxios(MODE);
+export const socket: WebSocket = setWebSocket(MODE);
 
 // *** SPECIFIC NETWORK MODULES
 export { default as Chart } from './Chart';

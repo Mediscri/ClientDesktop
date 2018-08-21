@@ -11,7 +11,7 @@ const response = {
     id: 4,
     name: '원지운',
     age: 27,
-    sex: 'm',
+    gender: 'm',
   },
   doctor: {
     id: 4,

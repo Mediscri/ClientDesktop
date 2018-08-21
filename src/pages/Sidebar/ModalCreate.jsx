@@ -12,7 +12,7 @@ type Props = {
 type State = {
   name: string,
   age: number,
-  sex: 'M' | 'F',
+  gender: 'M' | 'F',
 };
 
 export default class ModalCreate extends Component<Props, State> {
@@ -21,7 +21,7 @@ export default class ModalCreate extends Component<Props, State> {
     // $FlowFixMe
     age: null,
     // $FlowFixMe
-    sex: null,
+    gender: null,
   };
 
   handleChange = (e: SyntheticInputEvent<EventTarget>) => {
@@ -44,9 +44,9 @@ export default class ModalCreate extends Component<Props, State> {
                 { title: '환자 이름', name: 'name' },
                 {
                   title: '성별',
-                  name: 'sex',
+                  name: 'gender',
                   type: 'button',
-                  curVal: this.state.sex,
+                  curVal: this.state.gender,
                   values: ['남', '여'],
                 },
                 { title: '나이', name: 'age', type: 'number' },
