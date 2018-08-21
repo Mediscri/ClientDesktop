@@ -39,7 +39,7 @@ const response = {
   },
 };
 
-async function get(id: number) {
+async function get() {
   return await Promise.resolve(
     produce(response, draft => {
       for (const key in draft.categories) {

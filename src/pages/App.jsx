@@ -9,11 +9,11 @@ import Dashboard from './Dashboard';
 import Fullscreen from '../components/Fullscreen';
 import Flex from '../components/Flex';
 // network
-import PatientAPI from '../networks/Patient';
+import { Patient } from '../networks';
 
 export default class App extends Component<{}> {
   render() {
-    PatientAPI.getByDate();
+    Patient.get();
     return (
       <Router>
         <Fullscreen>

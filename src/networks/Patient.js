@@ -1,9 +1,9 @@
 // @flow
 import { http } from './index';
 
-async function getByDate(created_today: boolean = true) {
-  const response = await http.get('/charts/', { params: { created_today } });
-  console.log(response);
+async function get() {
+  const response = await http.get('/patients/');
+  return Promise.resolve(response.data);
 }
 
-export default { getByDate };
+export default { get };

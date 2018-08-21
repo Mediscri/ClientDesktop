@@ -63,8 +63,8 @@ const UPDATE_ITEM = 'chart/UPDATE_ITEM';
 const DELETE_ITEM = 'chart/DELETE_ITEM';
 
 // *** ACTION WITH NETWORK
-export const getChart = (id: number) => (dispatch: Dispatch) =>
-  ChartAPI.get(id).then(data =>
+export const getChart = (created_today: boolean) => (dispatch: Dispatch) =>
+  ChartAPI.getByDate(created_today).then(data =>
     dispatch({
       type: GET_CHART,
       payload: data,
