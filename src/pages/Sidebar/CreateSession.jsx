@@ -1,21 +1,19 @@
 // @flow
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import * as styled from './Styled';
 // component
 import ModalBig from '../../components/ModalBig';
 import InputGroup from '../../components/InputGroup';
+// network
+import { createChart } from '../../modules/chart';
+// type
+import type { PatientNew } from '../../networks/Patient';
 
-type Props = {
-  handleDismiss: Function,
-};
+type Props = { handleDismiss: Function, CreateChart: Function };
+type State = PatientNew;
 
-type State = {
-  name: string,
-  age: number,
-  gender: 'M' | 'F',
-};
-
-export default class ModalCreate extends Component<Props, State> {
+class CreateSession extends Component<Props, State> {
   state = {
     name: '',
     // $FlowFixMe
@@ -30,7 +28,15 @@ export default class ModalCreate extends Component<Props, State> {
 
   handleSubmit = (e: Event) => {
     e.preventDefault();
-    console.log(this.state);
+    const { CreateChart, handleDismiss } = this.props;
+    const data = {
+      ...this.state,
+      age: parseInt(this.state.age, 10),
+      gender: this.state.gender === '남' ? 0 : 1,
+    };
+    CreateChart(data);
+
+    handleDismiss();
   };
 
   render() {
@@ -60,3 +66,10 @@ export default class ModalCreate extends Component<Props, State> {
     );
   }
 }
+
+export default connect(
+  state => ({}),
+  dispatch => ({
+    CreateChart: (data: PatientNew) => createChart(data)(dispatch),
+  })
+)(CreateSession);

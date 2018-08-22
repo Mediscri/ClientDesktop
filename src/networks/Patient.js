@@ -1,6 +1,17 @@
 // @flow
 import { http } from './index';
 
+export type PatientNew = {|
+  +name: string,
+  gender: 'male' | 'female',
+  +age: number,
+|};
+
+export type Patient = {|
+  +id: string,
+  ...PatientNew,
+|};
+
 // [GET] /patients/
 async function get() {
   const response = await http.get('/patients/');
@@ -14,9 +25,9 @@ async function getById(patient_id: string) {
 }
 
 // [POST] /patients/
-async function post(body: { gender: 0 | 1, name: string, age: number }) {
-  const response = await http.post('/patients/', { body });
-  return Promise.resolve(response);
+async function post(patient: PatientNew) {
+  const response = await http.post('/patients/', JSON.stringify(patient));
+  return Promise.resolve(response.data);
 }
 
 export default { get, getById, post };

@@ -1,22 +1,17 @@
 // @flow
 import produce from 'immer';
 import moment from 'moment';
-// // type
-// import type { Chart } from '../modules/chart';
 
-const response = {
-  id: 1,
+const chart = {
+  id: 'eb18a87d-d431-46f7-acec-d7c21510701d',
   created: moment(),
   patient: {
     id: 4,
     name: '원지운',
     age: 27,
-    gender: 'm',
+    gender: 'male',
   },
-  doctor: {
-    id: 4,
-    name: '전명훈',
-  },
+  doctor: { id: 'ci2xa87d-da31-4637-ccbe-d7c21513501d', name: '전명훈' },
   categories: {
     cc: [{ text: '자고 일어나니까 배가 너무 아파요 의사선생님' }],
     pi: [
@@ -41,7 +36,7 @@ const response = {
 
 async function get() {
   return await Promise.resolve(
-    produce(response, draft => {
+    produce(chart, draft => {
       for (const key in draft.categories) {
         draft.categories[key].forEach((data, idx) => {
           data.index = idx;

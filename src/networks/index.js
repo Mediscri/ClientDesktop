@@ -19,6 +19,7 @@ function setAxios(mode: string) {
       instance = axios.create({
         baseURL: 'http://localhost:8000/api/v1',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: 'TOKEN 47820c0faa73dee026e3dd24fcd029880312420f',
         },
       });
