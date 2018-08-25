@@ -11,7 +11,7 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const CreateChart = styled.div`
+export const CreateSession = styled.div`
   width: 100%;
   height: ${size.element.button_with_text.height};
   border-radius: ${size.element.button_with_text.radius};

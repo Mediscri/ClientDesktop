@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 // network
-import { Socket } from '../../networks';
+import { socket } from '../../networks';
 // type
 import type { State as SocketState } from '../../modules/socket';
 
@@ -19,7 +19,7 @@ import { size, color } from '../../styles';
 type Props = { ...SocketState, patientId: number };
 
 type State = {
-  sentence: string,
+  raw_sentence: string,
 };
 
 const Container = styled.div`
@@ -47,15 +47,15 @@ const Send = styled.button`
 `;
 
 class TextInput extends Component<Props, State> {
-  state = { sentence: '' };
+  state = { raw_sentence: '' };
 
   handleChage = (e: SyntheticInputEvent<EventTarget>) =>
     this.setState({ [e.target.name]: e.target.value });
 
   handleSubmit = (e: Event) => {
     e.preventDefault();
-    Socket.send({ ...this.state, patient_id: this.props.patientId });
-    this.setState({ sentence: '' });
+    socket.send(this.state);
+    this.setState({ raw_sentence: '' });
   };
 
   render() {
@@ -66,9 +66,9 @@ class TextInput extends Component<Props, State> {
           <Container>
             <Input
               type="text"
-              name="sentence"
+              name="raw_sentence"
               onChange={this.handleChage}
-              value={this.state.sentence}
+              value={this.state.raw_sentence}
             />
             <Send type="submit">send</Send>
           </Container>

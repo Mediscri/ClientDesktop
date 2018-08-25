@@ -1,14 +1,17 @@
-import { baseWS } from './baseURL';
 import { updateState } from '../modules/socket';
 import { createItem } from '../modules/chart';
 // type
 import type { Dispatch } from 'redux';
+// dict
+import dict from './classDict';
 
 class Socket {
+  // type
   socket: WebSocket;
 
-  callbacks = {};
   static instance = null;
+  static baseURL: string = null;
+
   static getInstance() {
     if (!Socket.instance) {
       Socket.instance = new Socket();
@@ -16,13 +19,19 @@ class Socket {
     return Socket.instance;
   }
 
+  static setBaseURL(baseURL: string) {
+    if (!Socket.baseURL) {
+      Socket.baseURL = baseURL;
+    }
+  }
+
   constructor() {
     //$FlowFixMe
     this.socket = null;
   }
 
-  connect(path, dispatch: Dispatch) {
-    this.socket = new WebSocket(baseWS + path);
+  connect(path: string, dispatch: Dispatch) {
+    this.socket = new WebSocket(Socket.baseURL + path);
     updateState(dispatch);
 
     this.socket.onopen = e => {
@@ -31,13 +40,13 @@ class Socket {
     this.socket.onmessage = e => {
       const res = JSON.parse(JSON.parse(e.data));
 
-      let maxAccuracy = { accuracy: -1, category: null };
+      let maxAccuracy = { accuracy: 0, category: null };
       for (const data of res.deep_output) {
         if (maxAccuracy.accuracy < data.accuracy) {
-          // TODO: remove toLowerCase() function
+          // *** CHANGE CATEGORY TO MAJOR
           maxAccuracy = {
-            category: data.category.toLowerCase(),
-            accuracy: data.accuracy,
+            category: dict[data.category][0],
+            accuracy: parseInt(data.accuracy * 100, 10),
           };
         }
       }
@@ -48,11 +57,11 @@ class Socket {
       })(dispatch);
     };
     this.socket.onerror = e => {
-      console.log(e);
+      console.error(e);
       updateState(dispatch);
     };
     this.socket.onclose = () => {
-      console.log(`socket unexpectly closed, try to reconnect...`);
+      console.error(`socket unexpectly closed, try to reconnect...`);
       updateState(dispatch);
       this.connect(
         path,
@@ -72,5 +81,4 @@ class Socket {
   }
 }
 
-const SocketInstance: Socket = Socket.getInstance();
-export default SocketInstance;
+export default Socket;

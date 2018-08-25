@@ -4,7 +4,7 @@ import moment from 'moment';
 import * as styled from './Styled';
 // component
 import History from './History';
-import ModalCreate from './ModalCreate';
+import CreateSession from './CreateSession';
 
 // TODO: [REMOVE]Test data
 const list = [
@@ -95,9 +95,9 @@ export default class Sidebar extends Component<Props, State> {
   render() {
     return (
       <styled.Container>
-        <styled.CreateChart onClick={this.handleClickCreate}>
+        <styled.CreateSession onClick={this.handleClickCreate}>
           신규 진료
-        </styled.CreateChart>
+        </styled.CreateSession>
         <styled.HistoryContainer>
           <styled.Hr />
           {list.map(data => (
@@ -105,7 +105,7 @@ export default class Sidebar extends Component<Props, State> {
           ))}
         </styled.HistoryContainer>
         {this.state.create_chart && (
-          <ModalCreate handleDismiss={this.handleDismiss} />
+          <CreateSession handleDismiss={this.handleDismiss} />
         )}
       </styled.Container>
     );

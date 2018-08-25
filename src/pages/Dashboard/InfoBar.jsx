@@ -12,7 +12,7 @@ type Props = {|
 
 const title = {
   name: '환자명',
-  sex: '성별',
+  gender: '성별',
   age: '나이',
   created: '진료일자',
 };

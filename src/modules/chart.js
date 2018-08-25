@@ -1,25 +1,19 @@
 // @flow
 import type { Dispatch } from 'redux';
+import moment from 'moment';
 // import { pender } from 'redux-pender';
 import produce from 'immer';
 // network
-import { getChartAPI } from '../networks';
+import { Chart as ChartAPI, Patient as PatientAPI } from '../networks';
 // type
 import type Moment from 'moment';
+import type { Patient, PatientNew } from '../networks/Patient';
 
 export type ChartNew = {|
-  +id: number,
+  +id: string,
   +created: Moment,
-  +patient: {
-    +id: number,
-    +name: string,
-    +age: number,
-    +sex: 'm' | 'f',
-  },
-  +doctor: {
-    +id: number,
-    +name: string,
-  },
+  +patient: Patient,
+  +doctor: { +id: string, +name: string },
 |};
 
 export type ChartItem = {|
@@ -63,69 +57,49 @@ const UPDATE_ITEM = 'chart/UPDATE_ITEM';
 const DELETE_ITEM = 'chart/DELETE_ITEM';
 
 // *** ACTION WITH NETWORK
-export const getChart = (id: number) => (dispatch: Dispatch) =>
-  getChartAPI(id).then(data =>
-    dispatch({
-      type: GET_CHART,
-      payload: data,
-    })
+export const getChart = (created_today: boolean) => (dispatch: Dispatch) =>
+  ChartAPI.getByDate(created_today).then(data =>
+    dispatch({ type: GET_CHART, payload: data })
+  );
+
+export const createChart = (data: PatientNew) => (dispatch: Dispatch) =>
+  PatientAPI.post(data).then(patient =>
+    ChartAPI.post({ patient: patient.id }).then(chartData =>
+      dispatch({
+        type: CREATE_CHART,
+        payload: {
+          ...chartData,
+          created: moment(chartData.created),
+          patient: {
+            ...patient,
+            gender: patient.gender === 0 ? 'male' : 'female',
+          },
+        },
+      })
+    )
   );
 
 export const createItem = (data: Item) => (dispatch: Dispatch) =>
-  dispatch({
-    type: CREATE_ITEM,
-    payload: data,
-  });
+  dispatch({ type: CREATE_ITEM, payload: data });
 
 // *** ACTION FUNCTION
-export const createChart = (data: ChartNew) => ({
-  type: CREATE_CHART,
-  payload: data,
-});
-export const moveItem = (data: Move) => ({
-  type: MOVE_ITEM,
-  payload: data,
-});
+export const moveItem = (data: Move) => ({ type: MOVE_ITEM, payload: data });
 export const updateItem = (data: Item) => (dispatch: Dispatch) =>
-  dispatch({
-    type: UPDATE_ITEM,
-    payload: data,
-  });
+  dispatch({ type: UPDATE_ITEM, payload: data });
 export const deleteItem = (data: Item) => (dispatch: Dispatch) =>
-  dispatch({
-    type: DELETE_ITEM,
-    payload: data,
-  });
+  dispatch({ type: DELETE_ITEM, payload: data });
 
 // *** INITIAL STATE
 const initState = { id: null };
 
 // *** REDUCER
 type Action =
-  | {|
-      +type: typeof GET_CHART,
-      +payload: Chart,
-    |}
-  | {|
-      +type: typeof CREATE_CHART,
-      +payload: ChartNew,
-    |}
-  | {|
-      +type: typeof CREATE_ITEM,
-      +payload: Item,
-    |}
-  | {|
-      +type: typeof MOVE_ITEM,
-      +payload: Move,
-    |}
-  | {|
-      +type: typeof UPDATE_ITEM,
-      +payload: Item,
-    |}
-  | {|
-      +type: typeof DELETE_ITEM,
-      +payload: Item,
-    |};
+  | { +type: typeof GET_CHART, +payload: Chart }
+  | { +type: typeof CREATE_CHART, +payload: ChartNew }
+  | { +type: typeof CREATE_ITEM, +payload: Item }
+  | { +type: typeof MOVE_ITEM, +payload: Move }
+  | { +type: typeof UPDATE_ITEM, +payload: Item }
+  | { +type: typeof DELETE_ITEM, +payload: Item };
 
 export default function chart(
   // $FlowFixMe
