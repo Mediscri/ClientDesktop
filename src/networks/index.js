@@ -10,7 +10,7 @@ function setAxios() {
     case 'development':
       instance.defaults.baseURL = 'http://localhost:8000/api/v1';
       instance.defaults.headers.common['Authorization'] =
-        'TOKEN 444eebcafaf886cfa522d8e0628ccca28f6de7e7';
+        'TOKEN d27403c6dbc671d3be2b4c7a6bd841f8bab90bab';
       instance.defaults.withCredentials = true;
       break;
     case 'production':

@@ -31,6 +31,7 @@ export type Chart = {|
     fh: Array<ChartItem>, // family history
     sh: Array<ChartItem>, // social history
     ros: Array<ChartItem>, // review of system
+    u: Array<ChartItem>, // undefined
   },
 |};
 
@@ -57,8 +58,8 @@ const UPDATE_ITEM = 'chart/UPDATE_ITEM';
 const DELETE_ITEM = 'chart/DELETE_ITEM';
 
 // *** ACTION WITH NETWORK
-export const getChart = (created_today: boolean) => (dispatch: Dispatch) =>
-  ChartAPI.getByDate(created_today).then(data =>
+export const getChart = (chart_id: string) => (dispatch: Dispatch) =>
+  ChartAPI.getDetail(chart_id).then(data =>
     dispatch({ type: GET_CHART, payload: data })
   );
 

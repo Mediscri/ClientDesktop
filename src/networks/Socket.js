@@ -43,9 +43,10 @@ class Socket {
       let maxAccuracy = { accuracy: 0, category: null };
       for (const data of res.deep_output) {
         if (maxAccuracy.accuracy < data.accuracy) {
+          const isValid = data.category !== '0' && data.category !== '1';
           // *** CHANGE CATEGORY TO MAJOR
           maxAccuracy = {
-            category: dict[data.category][0],
+            category: isValid ? dict[data.category][0] : 'u',
             accuracy: parseInt(data.accuracy * 100, 10),
           };
         }

@@ -25,7 +25,7 @@ class Dashboard extends Component<Props, State> {
 
   componentDidMount() {
     const { GetChart } = this.props;
-    GetChart(true).then(() => this.setState({ isLoaded: true }));
+    GetChart('this_is_test').then(() => this.setState({ isLoaded: true }));
   }
 
   render() {
@@ -54,7 +54,7 @@ export default connect(
     data: state.chart,
   }),
   dispatch => ({
-    GetChart: (created_today: boolean) => getChart(created_today)(dispatch),
+    GetChart: (chart_id: string) => getChart(chart_id)(dispatch),
     MoveChart: (move: Move) => moveItem(move),
   })
 )(Dashboard);

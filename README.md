@@ -22,17 +22,13 @@ client-side(doctor side) for mediscri
 
 2.  `~$ cd ClientDoctor`
 
-3.  set up [BackendRESTApi](https://github.com/Mediscri/BackendRESTApi) & get superuser TOKEN
+3.  set up [BackendRESTApi](https://github.com/Mediscri/BackendRESTApi) & run script below to get superuser TOKEN
 
 ```
-~$ curl -X POST \
- http://localhost:8000/api-token-auth/ \
- -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
- -F username={{your_username}} \
- -F password={{your_password}}
+~$ curl -X POST http://localhost:8000/api-token-auth/ -F username=admin -F password=admin
 ```
 
-4. change superuser TOKEN on `/src/networks/indes.js`
+4. change TOKEN on `/src/networks/index.js`
 
 ```javascript
 function setAxios() {
@@ -49,12 +45,6 @@ function setAxios() {
 }
 ```
 
-<<<<<<< HEAD
 5.  `~/ClientDoctor$ npm i`
 
 6.  `~/ClientDoctor$ npm start`
-=======
-4.  `~/ClientDoctor$ npm i`
-
-5.  `~/ClientDoctor$ npm start`
->>>>>>> bfdab645018d0c665119ddbec5eedd9fa1bc586a

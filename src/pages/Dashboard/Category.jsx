@@ -7,7 +7,7 @@ import CategroyItem from './CategoryItem';
 import type { ChartItem } from '../../modules/chart';
 
 type Props = {
-  category: 'cc' | 'pi' | 'pmh' | 'fh' | 'sh' | 'ros',
+  category: 'cc' | 'pi' | 'pmh' | 'fh' | 'sh' | 'ros' | 'u',
   item: Array<ChartItem>,
 };
 
@@ -19,6 +19,7 @@ class Category extends Component<Props> {
     fh: 'Family History',
     sh: 'Social History',
     ros: 'Review Of System',
+    u: 'Undefined',
   };
 
   render() {
