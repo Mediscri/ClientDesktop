@@ -38,7 +38,7 @@ class Socket {
       updateState(dispatch);
     };
     this.socket.onmessage = e => {
-      const res = JSON.parse(JSON.parse(e.data));
+      const res = JSON.parse(e.data);
 
       let maxAccuracy = { accuracy: 0, category: null };
       for (const data of res.deep_output) {

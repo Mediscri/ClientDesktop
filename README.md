@@ -16,19 +16,21 @@ client-side(doctor side) for mediscri
 - react-contextmenu
 - immer
 
-## Run Local-env
+## Run on Local Env
 
-1.  `~$ git clone https://github.com/Mediscri/ClientDoctor.git`
+1.  로컬 환경에 백엔드 세팅 [BackendRESTApi](https://github.com/Mediscri/BackendRESTApi)
 
-2.  `~$ cd ClientDoctor`
+2.  `~$ git clone https://github.com/Mediscri/ClientDoctor.git`
 
-3.  set up [BackendRESTApi](https://github.com/Mediscri/BackendRESTApi) & run script below to get superuser TOKEN
+3.  `~$ cd ClientDoctor`
+
+4.  Superuser Token 을 가져오는 스크립스 실행
 
 ```
-~$ curl -X POST http://localhost:8000/api-token-auth/ -F username=admin -F password=admin
+~/ClientDoctor$ curl -X POST http://localhost:8000/api-token-auth/ -F username=admin -F password=admin
 ```
 
-4. change TOKEN on `/src/networks/index.js`
+4. `/src/networks/index.js`에서 TOKEN 키 변경하기
 
 ```javascript
 function setAxios() {
@@ -38,7 +40,7 @@ function setAxios() {
       case 'development':
       	...
       	// HERE
-      	instance.defaluts.headers.common['Authorization'] = 'TOKEN {{YOUR_TOKEN}}';
+      	instance.defaluts.headers.common['Authorization'] = 'TOKEN {불러온 토큰 키 입력}';
       	...
   }
   ...
