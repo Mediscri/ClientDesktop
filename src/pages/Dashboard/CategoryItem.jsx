@@ -104,13 +104,14 @@ class CategoryItem extends Component<Props, State> {
 
     const accuracy = info.accuracy ? info.accuracy : 100;
     const color = mixin.accuracyToColor(accuracy);
-    const percent = `${parseInt(accuracy, 10)}%`;
 
     return (
       <div>
         <ContextMenuTrigger id={hash}>
           <styled.ItemWrapper onDoubleClick={this.handleDoubleClick}>
-            <styled.ItemAccuracy color={color}>{percent}</styled.ItemAccuracy>
+            <styled.ItemAccuracy color={color}>
+              {`${accuracy}%`}
+            </styled.ItemAccuracy>
             {this.state.editMode ? (
               <styled.ItemEditForm onSubmit={this.handleSubmit}>
                 <styled.ItemEdit

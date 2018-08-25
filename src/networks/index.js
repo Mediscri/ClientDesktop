@@ -4,43 +4,36 @@ import WebSocket from './Socket';
 // type
 import type Axios from 'axios';
 
-const DEVELOPMENT = 'DEVELOPMENT';
-const PRODUCTION = 'PRODUCTION';
-
-const MODE = DEVELOPMENT;
-
-function setAxios(mode: string) {
-  let instance = null;
-  switch (mode) {
-    case PRODUCTION:
-      instance = axios.create({ baseURL: 'https://www.mediscri.com/api/v1' });
+function setAxios() {
+  const instance = axios.create();
+  switch (process.env.NODE_ENV) {
+    case 'development':
+      instance.defaults.baseURL = 'http://localhost:8000/api/v1';
+      instance.defaults.headers.common['Authorization'] =
+        'TOKEN 444eebcafaf886cfa522d8e0628ccca28f6de7e7';
+      instance.defaults.withCredentials = true;
       break;
-    case DEVELOPMENT:
-      instance = axios.create({
-        baseURL: 'http://localhost:8000/api/v1',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'TOKEN 47820c0faa73dee026e3dd24fcd029880312420f',
-        },
-      });
+    case 'production':
+      instance.defaults.baseURL = 'https://www.mediscri.com/api/v1';
       break;
     default:
-      console.log(`INVALID MODE. ${MODE}`);
+      console.log(`INVALID MODE`);
   }
 
+  instance.defaults.headers.post['Content-Type'] = 'application/json';
   return instance;
 }
 
-function setWebSocket(mode: string) {
-  switch (mode) {
-    case PRODUCTION:
-      WebSocket.setBaseURL('wss://www.mediscri.com/ws/v1');
-      break;
-    case DEVELOPMENT:
+function setWebSocket() {
+  switch (process.env.NODE_ENV) {
+    case 'development':
       WebSocket.setBaseURL('ws://localhost:8000/ws/v1');
       break;
+    case 'production':
+      WebSocket.setBaseURL('wss://www.mediscri.com/ws/v1');
+      break;
     default:
-      console.log(`INVALID MODE. ${MODE}`);
+      console.log(`INVALID MODE`);
   }
 
   const instance = WebSocket.getInstance();
@@ -48,8 +41,8 @@ function setWebSocket(mode: string) {
 }
 
 // *** HTTP, SOCKET INSTANCE
-export const http: Axios = setAxios(MODE);
-export const socket: WebSocket = setWebSocket(MODE);
+export const http: Axios = setAxios();
+export const socket: WebSocket = setWebSocket();
 
 // *** SPECIFIC NETWORK MODULES
 export { default as Chart } from './Chart';
