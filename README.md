@@ -49,6 +49,12 @@ function setAxios() {
 }
 ```
 
+<<<<<<< HEAD
 5.  `~/ClientDoctor$ npm i`
 
 6.  `~/ClientDoctor$ npm start`
+=======
+4.  `~/ClientDoctor$ npm i`
+
+5.  `~/ClientDoctor$ npm start`
+>>>>>>> bfdab645018d0c665119ddbec5eedd9fa1bc586a
