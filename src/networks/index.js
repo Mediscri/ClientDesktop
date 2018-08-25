@@ -11,7 +11,6 @@ function setAxios() {
       instance.defaults.baseURL = 'http://localhost:8000/api/v1';
       instance.defaults.headers.common['Authorization'] =
         'TOKEN d27403c6dbc671d3be2b4c7a6bd841f8bab90bab';
-      instance.defaults.withCredentials = true;
       break;
     case 'production':
       instance.defaults.baseURL = 'https://www.mediscri.com/api/v1';
