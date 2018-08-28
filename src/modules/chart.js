@@ -1,12 +1,13 @@
 // @flow
-import type { Dispatch } from 'redux';
 import moment from 'moment';
 import produce from 'immer';
 // network
 import { Chart as ChartAPI, Patient as PatientAPI } from '../networks';
 // type
+import type { Dispatch } from 'redux';
 import type Moment from 'moment';
 import type { Patient, PatientNew } from '../networks/Patient';
+import type { BrowserHistory } from 'history';
 
 export type ChartNew = {|
   +id: string,
@@ -57,10 +58,13 @@ const UPDATE_ITEM = 'chart/UPDATE_ITEM';
 const DELETE_ITEM = 'chart/DELETE_ITEM';
 
 // *** ACTION WITH NETWORK
-export const getChart = (chart_id: string) => (dispatch: Dispatch) =>
-  ChartAPI.getDetail(chart_id).then(data =>
-    dispatch({ type: GET_CHART, payload: data })
-  );
+export const getChart = (chart_id: string, history: BrowserHistory) => (
+  dispatch: Dispatch
+) =>
+  ChartAPI.getDetail(chart_id).then(data => {
+    dispatch({ type: GET_CHART, payload: data });
+    history.replace(`/dashboard/${chart_id}`);
+  });
 
 export const createChart = (data: PatientNew) => (dispatch: Dispatch) =>
   PatientAPI.post(data).then(patient =>

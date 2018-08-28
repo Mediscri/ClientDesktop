@@ -17,8 +17,8 @@ function setAxios() {
     default:
       console.error(`INVALID MODE`);
   }
-
   instance.defaults.headers.post['Content-Type'] = 'application/json';
+
   return instance;
 }
 

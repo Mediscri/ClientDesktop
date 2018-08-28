@@ -4,7 +4,7 @@ import { http } from './index';
 import chartTest from './chart.test';
 
 // [GET] /charts/?created_today
-async function getByDate(created_today: boolean = true) {
+async function getByDate(created_today: boolean) {
   const response = await http.get('/charts/', { params: { created_today } });
   return Promise.resolve(response.data);
 }

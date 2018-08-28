@@ -1,8 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { getChart, moveItem } from '../../modules/chart';
+import { moveItem } from '../../modules/chart';
 import * as styled from './Styled';
 import InfoBar from './InfoBar';
 import Category from './Category';
@@ -12,7 +11,6 @@ import type { Chart, Move } from '../../modules/chart';
 
 type Props = {
   data: Chart,
-  GetChart: Function,
   MoveChart: Function,
 };
 
@@ -23,9 +21,11 @@ type State = {
 class Dashboard extends Component<Props, State> {
   state = { isLoaded: false };
 
-  componentDidMount() {
-    const { GetChart } = this.props;
-    GetChart('this_is_test').then(() => this.setState({ isLoaded: true }));
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.data.id && !prevState.isLoaded) {
+      return { isLoaded: true };
+    }
+    return null;
   }
 
   render() {
@@ -54,7 +54,6 @@ export default connect(
     data: state.chart,
   }),
   dispatch => ({
-    GetChart: (chart_id: string) => getChart(chart_id)(dispatch),
     MoveChart: (move: Move) => moveItem(move),
   })
 )(Dashboard);

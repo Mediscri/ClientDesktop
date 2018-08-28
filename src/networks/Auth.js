@@ -4,19 +4,24 @@ const key = 'authroization/TOKEN';
 
 export async function checkToken() {
   if (localStorage.hasOwnProperty(key)) {
-    let data = await localStorage.getItem(key);
+    const data = await localStorage.getItem(key);
     try {
       const { token } = JSON.parse(data);
+      console.log('SET TOKEN TO HEADERS');
       http.defaults.headers.common['Authorization'] = `TOKEN ${token}`;
-      return Promise.resolve();
+      return Promise.resolve(token);
     } catch (e) {
+      console.log('LOCAL STORAGE IS EMPTY');
       return Promise.reject();
     }
   }
   return Promise.reject();
 }
 
-export async function setToken(body: { username: string, password: string }) {
+type Body = { username: string, password: string };
+
+export async function setToken(body: Body) {
+  console.log('GET TOEKN FROM SERVER');
   let url = '';
   if (process.env.NODE_ENV === 'development') {
     url = 'http://localhost:8000/api-token-auth/';
@@ -37,7 +42,7 @@ export async function setToken(body: { username: string, password: string }) {
   if (token !== null) {
     http.defaults.headers.common['Authorization'] = `TOKEN ${token}`;
     await localStorage.setItem(key, JSON.stringify({ token }));
-    return Promise.resolve();
+    return Promise.resolve(token);
   }
 
   return Promise.reject();
