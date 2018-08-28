@@ -1,6 +1,6 @@
 // @flow
-import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 // pages
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
@@ -8,19 +8,22 @@ import Dashboard from './Dashboard';
 // components
 import Fullscreen from '../components/Fullscreen';
 import Flex from '../components/Flex';
+import CheckAuth from '../components/CheckAuth';
 
-export default class App extends Component<{}> {
-  render() {
-    return (
-      <Router>
-        <Fullscreen>
-          <Navbar />
-          <Flex>
-            <Sidebar />
-            <Dashboard />
-          </Flex>
-        </Fullscreen>
-      </Router>
-    );
-  }
-}
+const Main = () => (
+  <Flex>
+    <CheckAuth />
+    <Sidebar />
+    <Dashboard />
+  </Flex>
+);
+
+const App = () => (
+  <Fullscreen>
+    <Navbar />
+    <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
+    <Route path="/dashboard" component={Main} />
+  </Fullscreen>
+);
+
+export default App;
