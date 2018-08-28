@@ -1,7 +1,6 @@
 // @flow
 import type { Dispatch } from 'redux';
 import moment from 'moment';
-// import { pender } from 'redux-pender';
 import produce from 'immer';
 // network
 import { Chart as ChartAPI, Patient as PatientAPI } from '../networks';

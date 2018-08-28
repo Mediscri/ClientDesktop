@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './pages/App';
 import store from './store';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -16,4 +16,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-registerServiceWorker();
+
+// registerServiceWorker();
