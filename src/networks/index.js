@@ -9,14 +9,13 @@ function setAxios() {
   switch (process.env.NODE_ENV) {
     case 'development':
       instance.defaults.baseURL = 'http://localhost:8000/api/v1';
-      instance.defaults.headers.common['Authorization'] =
-        'TOKEN d27403c6dbc671d3be2b4c7a6bd841f8bab90bab';
       break;
     case 'production':
-      instance.defaults.baseURL = 'https://www.mediscri.com/api/v1';
+      instance.defaults.baseURL =
+        'http://ec2-54-180-32-15.ap-northeast-2.compute.amazonaws.com:8000/api/v1';
       break;
     default:
-      console.log(`INVALID MODE`);
+      console.error(`INVALID MODE`);
   }
 
   instance.defaults.headers.post['Content-Type'] = 'application/json';
@@ -29,10 +28,12 @@ function setWebSocket() {
       WebSocket.setBaseURL('ws://localhost:8000/ws/v1');
       break;
     case 'production':
-      WebSocket.setBaseURL('wss://www.mediscri.com/ws/v1');
+      WebSocket.setBaseURL(
+        'ws://ec2-54-180-32-15.ap-northeast-2.compute.amazonaws.com:8000/ws/v1'
+      );
       break;
     default:
-      console.log(`INVALID MODE`);
+      console.error(`INVALID MODE`);
   }
 
   const instance = WebSocket.getInstance();

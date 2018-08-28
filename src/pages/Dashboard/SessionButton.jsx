@@ -9,6 +9,7 @@ type Props = {
   readyState: 'CONNECTING' | 'OPEN' | 'CLOSING' | 'CLOSED' | 'NULL',
   ConnectSocket: Function,
   CloseSocket: Function,
+  patientId: string,
 };
 
 const message = {
@@ -40,13 +41,13 @@ class SessionButton extends Component<Props, State> {
   }
 
   handleButtonClick = () => {
-    const { readyState, ConnectSocket, CloseSocket } = this.props;
+    const { readyState, ConnectSocket, CloseSocket, patientId } = this.props;
     switch (readyState) {
       case 'OPEN':
         CloseSocket();
         break;
       default:
-        ConnectSocket('/transcriptions/client/1/');
+        ConnectSocket(`/transcriptions/client/${patientId}/`);
         break;
     }
   };
@@ -75,6 +76,7 @@ class SessionButton extends Component<Props, State> {
 export default connect(
   state => ({
     readyState: state.socket.readyState,
+    patientId: state.chart.patient.id,
   }),
   dispatch => ({
     ConnectSocket: (url: string) => connectSocket(url)(dispatch),
