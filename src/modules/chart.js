@@ -1,6 +1,7 @@
 // @flow
 import moment from 'moment';
 import produce from 'immer';
+import { addChartToList } from './chartList';
 // network
 import { Chart as ChartAPI, Patient as PatientAPI } from '../networks';
 // type
@@ -68,19 +69,26 @@ export const getChart = (chart_id: string, history: BrowserHistory) => (
 
 export const createChart = (data: PatientNew) => (dispatch: Dispatch) =>
   PatientAPI.post(data).then(patient =>
-    ChartAPI.post({ patient: patient.id }).then(chartData =>
-      dispatch({
-        type: CREATE_CHART,
-        payload: {
-          ...chartData,
-          created: moment(chartData.created),
-          patient: {
-            ...patient,
-            gender: patient.gender === 0 ? 'male' : 'female',
-          },
+    ChartAPI.post({ patient: patient.id }).then(chartData => {
+      const payload = {
+        ...chartData,
+        created: moment(chartData.created),
+        patient: {
+          ...patient,
+          gender: patient.gender === 0 ? 'male' : 'female',
         },
-      })
-    )
+      };
+
+      dispatch({ type: CREATE_CHART, payload });
+      // *** UPDATE SIDE BAR
+      addChartToList({
+        id: payload.id,
+        patient: payload.patient,
+        cc: null,
+        created: payload.created,
+        modified: payload.created,
+      })(dispatch);
+    })
   );
 
 export const createItem = (data: Item) => (dispatch: Dispatch) =>

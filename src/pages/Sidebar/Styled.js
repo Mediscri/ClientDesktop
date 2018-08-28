@@ -79,6 +79,9 @@ export const Hr = styled.div`
 
 export const InfoWrapper = styled.div`
   margin-top: ${size.space.wrapper};
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const AccuracyWrapper = styled.div`

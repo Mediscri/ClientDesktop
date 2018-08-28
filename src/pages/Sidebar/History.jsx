@@ -6,17 +6,20 @@ import Flex from '../../components/Flex';
 import dropdown from '../../icons/ic_dropdown.svg';
 // type
 import type { Data, Item } from '../../modules/chartList';
+import type { BrowserHistory } from 'history';
 
-type Props = { data: Data };
+type PatientProps = { item: Item, handleClick: Function };
+
+type Props = { data: Data, history: BrowserHistory };
 
 type State = {
   isToday: boolean,
   showMore: boolean,
 };
 
-const Patient = ({ item }: { item: Item }) => {
+const Patient = ({ item, handleClick }: PatientProps) => {
   return (
-    <styled.InfoWrapper>
+    <styled.InfoWrapper onClick={() => handleClick(item.id)}>
       <Flex option="align-items: center;">
         <styled.AccuracyWrapper>
           <styled.InfoAccuracy color="#EDEEEC" />
@@ -42,6 +45,8 @@ export default class History extends Component<Props, State> {
   }
 
   handleShowMore = () => this.setState({ showMore: !this.state.showMore });
+  handleClick = (chart_id: string) =>
+    this.props.history.push(`/dashboard/${chart_id}`);
 
   render() {
     const { data } = this.props;
@@ -58,7 +63,11 @@ export default class History extends Component<Props, State> {
           </styled.Header>
           {this.state.showMore &&
             data.history.map((item: Item) => (
-              <Patient item={item} key={item.id} />
+              <Patient
+                item={item}
+                handleClick={this.handleClick}
+                key={item.id}
+              />
             ))}
         </styled.HistoryWrapper>
         <styled.Hr />

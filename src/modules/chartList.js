@@ -1,5 +1,5 @@
-// @flow
 import moment from 'moment';
+import produce from 'immer';
 import { getChart } from './chart';
 // network
 import { Chart as ChartAPI } from '../networks';
@@ -26,7 +26,7 @@ export type ChartList = {|
   +count: number,
   +next: null,
   +previous: null,
-  +list: Array<Data>,
+  list: Array<Data>,
 |};
 
 type Response = {|
@@ -38,6 +38,7 @@ type Response = {|
 
 // *** ACTION TYPE
 const GET_CHART_LIST = 'chart/GET_CHART_LIST';
+const ADD_CHART_TO_LIST = 'chart/ADD_CHART_TO_LIST';
 
 // *** ACTION FUNCTION
 function updateFormat(data: Response) {
@@ -82,14 +83,22 @@ export const getChartListById = (patient: string) => (dispatch: Dispatch) =>
     dispatch({ type: GET_CHART_LIST, payload: updateFormat(data) })
   );
 
+export const addChartToList = (item: Item) => (dispatch: Dispatch) =>
+  dispatch({ type: ADD_CHART_TO_LIST, payload: item });
+
 // *** INITIAL STATE
 const initState = { count: 0, next: null, previous: null, list: [] };
 
 // *** REDUCER
-type Action = {|
-  +type: typeof GET_CHART_LIST,
-  +payload: ChartList,
-|};
+type Action =
+  | {
+      +type: typeof GET_CHART_LIST,
+      +payload: ChartList,
+    }
+  | {
+      +type: typeof ADD_CHART_TO_LIST,
+      +payload: Item,
+    };
 
 export default function chartList(
   state: ChartList = initState,
@@ -98,6 +107,16 @@ export default function chartList(
   switch (action.type) {
     case GET_CHART_LIST:
       return { ...state, ...action.payload };
+    case ADD_CHART_TO_LIST:
+      return produce(state, draft => {
+        // $FlowFixMe
+        const { created } = action.payload;
+        if (draft.list[0].date.isSame(created, 'day')) {
+          draft.list[0].history.unshift(action.payload);
+        } else {
+          draft.list.unshift({ date: created, history: [action.payload] });
+        }
+      });
     default:
       return state;
   }

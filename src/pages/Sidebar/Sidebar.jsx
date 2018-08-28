@@ -49,7 +49,7 @@ class Sidebar extends Component<Props, State> {
         <styled.HistoryContainer>
           <styled.Hr />
           {list.map(data => (
-            <History data={data} key={data.date} />
+            <History data={data} history={this.props.history} key={data.date} />
           ))}
         </styled.HistoryContainer>
         {this.state.create_chart && (
