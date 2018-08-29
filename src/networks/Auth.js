@@ -27,7 +27,7 @@ export async function setToken(body: Body) {
     url = 'http://localhost:8000/api-token-auth/';
   } else {
     url =
-      'http://ec2-54-180-32-15.ap-northeast-2.compute.amazonaws.com:8000/api-token-auth/';
+      'http://ec2-13-209-17-145.ap-northeast-2.compute.amazonaws.com:8000/api-token-auth/';
   }
 
   const res = await fetch(url, {
