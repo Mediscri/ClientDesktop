@@ -25,9 +25,9 @@ const calcSize = formula => {
 };
 
 const accuracyToColor = (accuracy: number) => {
-  if (accuracy < 70) {
+  if (accuracy < 33) {
     return color.red;
-  } else if (accuracy < 80) {
+  } else if (accuracy < 66) {
     return color.yellow;
   } else if (accuracy < 100) {
     return color.green;

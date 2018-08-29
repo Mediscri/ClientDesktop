@@ -115,7 +115,7 @@ export const ItemWrapper = styled.div`
 
 export const ItemAccuracy = styled.div`
   ${props => props.color === color.black && `visibility: hidden;`};
-  width: ${size.element.accuracy.size};
+  flex-basis: ${size.element.accuracy.size};
   height: ${size.element.accuracy.size};
   border-radius: ${size.element.accuracy.radius};
   margin-right: 1rem;
@@ -129,6 +129,7 @@ export const ItemAccuracy = styled.div`
 `;
 
 export const ItemText = styled.p`
+  flex: 1;
   color: ${props => (props.color ? props.color : color.black)};
   font-size: ${size.font['14']};
   margin: ${size.space['14']} 0;
