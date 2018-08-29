@@ -12,7 +12,7 @@ function setAxios() {
       break;
     case 'production':
       instance.defaults.baseURL =
-        'http://ec2-54-180-32-15.ap-northeast-2.compute.amazonaws.com:8000/api/v1';
+        'http://ec2-13-209-17-145.ap-northeast-2.compute.amazonaws.xn--com-ky7m:8000/api/v1';
       break;
     default:
       console.error(`INVALID MODE`);
@@ -29,7 +29,7 @@ function setWebSocket() {
       break;
     case 'production':
       WebSocket.setBaseURL(
-        'ws://ec2-54-180-32-15.ap-northeast-2.compute.amazonaws.com:8000/ws/v1'
+        'ws://ec2-13-209-17-145.ap-northeast-2.compute.amazonaws.xn--com-ky7m:8000/ws/v1'
       );
       break;
     default:

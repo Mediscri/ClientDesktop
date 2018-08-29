@@ -72,7 +72,7 @@ export const getChartListByDate = (
     dispatch({ type: GET_CHART_LIST, payload: data });
 
     // *** LOAD FIRST DASHBOARD DATA
-    if (history) {
+    if (history && prevData.count > 0) {
       const chart_id = prevData.results[0].id;
       getChart(chart_id, history)(dispatch);
     }
@@ -111,7 +111,7 @@ export default function chartList(
       return produce(state, draft => {
         // $FlowFixMe
         const { created } = action.payload;
-        if (draft.list[0].date.isSame(created, 'day')) {
+        if (draft.count > 0 && draft.list[0].date.isSame(created, 'day')) {
           draft.list[0].history.unshift(action.payload);
         } else {
           draft.list.unshift({ date: created, history: [action.payload] });
