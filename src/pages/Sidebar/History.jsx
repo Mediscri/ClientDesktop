@@ -2,43 +2,34 @@
 import React, { Component, Fragment } from 'react';
 import * as styled from './Styled';
 import Flex from '../../components/Flex';
-import { mixin } from '../../styles';
-// type
-import type Moment from 'moment';
 // svg
 import dropdown from '../../icons/ic_dropdown.svg';
+// type
+import type { Data, Item } from '../../modules/chartList';
+import type { BrowserHistory } from 'history';
 
-type Info = {
-  name: string,
-  accuracy: number,
-  cc: string,
-};
+type PatientProps = { item: Item, handleClick: Function };
 
-type Props = {
-  data: {
-    date: Moment,
-    history: $ReadOnlyArray<Info>,
-  },
-};
+type Props = { data: Data, history: BrowserHistory };
 
 type State = {
   isToday: boolean,
   showMore: boolean,
 };
 
-const Patient = ({ info }: { info: Info }) => {
+const Patient = ({ item, handleClick }: PatientProps) => {
   return (
-    <styled.InfoWrapper>
+    <styled.InfoWrapper onClick={() => handleClick(item.id)}>
       <Flex option="align-items: center;">
         <styled.AccuracyWrapper>
-          <styled.InfoAccuracy color={mixin.accuracyToColor(info.accuracy)} />
+          <styled.InfoAccuracy color="#EDEEEC" />
         </styled.AccuracyWrapper>
-        <styled.InfoName>{info.name}</styled.InfoName>
+        <styled.InfoName>{item.patient.name}</styled.InfoName>
       </Flex>
       <Flex option="margin-top: 0.6rem;">
         {/* dummy area */}
         <styled.AccuracyWrapper />
-        <styled.InfoCC>CC: {info.cc}</styled.InfoCC>
+        <styled.InfoCC>CC: {item.cc}</styled.InfoCC>
       </Flex>
     </styled.InfoWrapper>
   );
@@ -54,6 +45,8 @@ export default class History extends Component<Props, State> {
   }
 
   handleShowMore = () => this.setState({ showMore: !this.state.showMore });
+  handleClick = (chart_id: string) =>
+    this.props.history.push(`/dashboard/${chart_id}`);
 
   render() {
     const { data } = this.props;
@@ -69,8 +62,12 @@ export default class History extends Component<Props, State> {
             </styled.DropdownWrapper>
           </styled.Header>
           {this.state.showMore &&
-            data.history.map((info: Info) => (
-              <Patient info={info} key={info.name} />
+            data.history.map((item: Item) => (
+              <Patient
+                item={item}
+                handleClick={this.handleClick}
+                key={item.id}
+              />
             ))}
         </styled.HistoryWrapper>
         <styled.Hr />

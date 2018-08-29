@@ -1,13 +1,14 @@
 // @flow
-import type { Dispatch } from 'redux';
 import moment from 'moment';
-// import { pender } from 'redux-pender';
 import produce from 'immer';
+import { addChartToList } from './chartList';
 // network
 import { Chart as ChartAPI, Patient as PatientAPI } from '../networks';
 // type
+import type { Dispatch } from 'redux';
 import type Moment from 'moment';
 import type { Patient, PatientNew } from '../networks/Patient';
+import type { BrowserHistory } from 'history';
 
 export type ChartNew = {|
   +id: string,
@@ -58,26 +59,36 @@ const UPDATE_ITEM = 'chart/UPDATE_ITEM';
 const DELETE_ITEM = 'chart/DELETE_ITEM';
 
 // *** ACTION WITH NETWORK
-export const getChart = (chart_id: string) => (dispatch: Dispatch) =>
-  ChartAPI.getDetail(chart_id).then(data =>
-    dispatch({ type: GET_CHART, payload: data })
-  );
+export const getChart = (chart_id: string, history: BrowserHistory) => (
+  dispatch: Dispatch
+) =>
+  ChartAPI.getDetail(chart_id).then(data => {
+    dispatch({ type: GET_CHART, payload: data });
+    history.replace(`/dashboard/${chart_id}`);
+  });
 
 export const createChart = (data: PatientNew) => (dispatch: Dispatch) =>
   PatientAPI.post(data).then(patient =>
-    ChartAPI.post({ patient: patient.id }).then(chartData =>
-      dispatch({
-        type: CREATE_CHART,
-        payload: {
-          ...chartData,
-          created: moment(chartData.created),
-          patient: {
-            ...patient,
-            gender: patient.gender === 0 ? 'male' : 'female',
-          },
+    ChartAPI.post({ patient: patient.id }).then(chartData => {
+      const payload = {
+        ...chartData,
+        created: moment(chartData.created),
+        patient: {
+          ...patient,
+          gender: patient.gender === 0 ? 'male' : 'female',
         },
-      })
-    )
+      };
+
+      dispatch({ type: CREATE_CHART, payload });
+      // *** UPDATE SIDE BAR
+      addChartToList({
+        id: payload.id,
+        patient: payload.patient,
+        cc: null,
+        created: payload.created,
+        modified: payload.created,
+      })(dispatch);
+    })
   );
 
 export const createItem = (data: Item) => (dispatch: Dispatch) =>

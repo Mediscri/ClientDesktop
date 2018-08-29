@@ -1,6 +1,7 @@
 /**
  * dict[0]: 대분류
  * dict[1]: 중분류
+ * dict[2]: 클래스
  */
 
 export default {

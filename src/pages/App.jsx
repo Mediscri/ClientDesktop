@@ -10,11 +10,11 @@ import Fullscreen from '../components/Fullscreen';
 import Flex from '../components/Flex';
 import CheckAuth from '../components/CheckAuth';
 
-const Main = () => (
+const Main = ({ match }) => (
   <Flex>
     <CheckAuth />
-    <Sidebar />
-    <Dashboard />
+    <Route path={`${match.url}`} component={Sidebar} />
+    <Route path={`${match.url}/:patientId`} component={Dashboard} />
   </Flex>
 );
 
